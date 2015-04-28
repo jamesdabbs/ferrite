@@ -1,0 +1,19 @@
+h1
+  = @course.topic.title
+  '
+  small #{@course.campus.name} - #{short_date @course.start_on}
+
+table.table.table-condensed
+  tr
+    th Instructor
+    td= @course.instructor.name
+  tr
+    th Start Date
+    td= @course.start_on
+  tr
+    th Github Organization
+    td
+      - if @course.github_org
+        = link_to @course.github_org.name, @course.github_org.url
+
+= button_to "Sync Course Members", sync_course_members_path(@course), method: :post, class: "btn btn-default"

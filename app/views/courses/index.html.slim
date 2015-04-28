@@ -1,0 +1,17 @@
+- if policy(:course).create?
+  = link_to "Add Course", new_course_path, class: "btn btn-default"
+
+table.table.table-striped.table-hover
+  thead
+    tr
+      th Topic
+      th Campus
+      th Start
+      th Instructor
+  tbody
+    - @courses.each do |course|
+      tr
+        td= link_to course.topic.title, course
+        td= course.campus.name
+        td= course.start_on
+        td= course.instructor.name

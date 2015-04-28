@@ -1,0 +1,14 @@
+table.table.table-condensed.table-striped.table-hover
+  thead
+    tr
+      th Name
+      th Email
+      th Campus
+      th Current Course
+  tbody
+    - @staff.each do |e|
+      tr
+        td= e.name
+        td= e.email
+        td
+        td
