@@ -4,8 +4,9 @@ class GoogleOauth
 
   attr_reader :auth, :domain
 
-  def initialize auth, domain: "theironyard.com"
-    @auth, @domain = auth, domain
+  def initialize auth
+    @auth   = auth
+    @domain = Figaro.env.required_login_domain || "theironyard.com"
     freeze
   end
 

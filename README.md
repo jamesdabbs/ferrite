@@ -1,7 +1,7 @@
 # Features - Staff
 
 ## Pull Employees from Teamwork
-- Geuesses current campus and topic
+- Geusses current campus and topic
 
 ## Sign in w/ Google
 - Requires TIY address

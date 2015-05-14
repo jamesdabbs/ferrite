@@ -4,7 +4,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     sign_in user
     redirect_to courses_path
   rescue GoogleOauth::InvalidDomain => e
-    redirect_to root_path, danger: e.message
+    redirect_to root_path, alert: e.message
   end
 
   def github
