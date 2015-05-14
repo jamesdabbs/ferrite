@@ -13,10 +13,11 @@ class Employment < ActiveRecord::Base
 
   def new_course opts={}
     next_monday = Date.today.at_beginning_of_week + 1.week
-    courses.new opts.merge(
+    defaults = {
       campus:   campus,
       topic:    topic,
       start_on: next_monday
-    )
+    }
+    courses.new defaults.merge opts
   end
 end

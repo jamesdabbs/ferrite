@@ -15,5 +15,3 @@ table.table.table-condensed
     td
       - if @course.github_org
         = link_to @course.github_org.name, @course.github_org.url
-
-= button_to "Sync Course Members", sync_course_members_path(@course), method: :post, class: "btn btn-default"
