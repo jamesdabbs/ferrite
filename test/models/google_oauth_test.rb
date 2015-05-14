@@ -4,6 +4,7 @@ class GoogleOauthTest < ActiveSupport::TestCase
   def auth extras={}
     Hashie::Mash.new({
       provider: "google_oauth2",
+      uid:      "1",
       info: {
         email:      "james@theironyard.com",
         first_name: "James",
@@ -18,7 +19,7 @@ class GoogleOauthTest < ActiveSupport::TestCase
 
   def test_it_checks_domains
     assert_raises GoogleOauth::InvalidDomain do
-      GoogleOauth.new(auth, domain: "gmail.com").find_or_register!
+      GoogleOauth.new(auth info: { email: "jamesdabbs@gmail.com" }).find_or_register!
     end
   end
 
@@ -28,15 +29,13 @@ class GoogleOauthTest < ActiveSupport::TestCase
     assert_equal existing, found
   end
 
-  def test_it_creates_new_users
+  def test_it_creates_new_employed_users
     email = auth.info.email
     assert_nil User.find_by_email email
 
     user = GoogleOauth.new(auth).find_or_register!
 
-    assert_equal user.email, email
-    assert_equal user.name,  "James Dabbs"
     assert_equal user, User.find_by_email(email)
-    assert user.employee
+    assert user.employment
   end
 end
