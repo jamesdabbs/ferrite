@@ -2,6 +2,8 @@ class User < ActiveRecord::Base
   devise :rememberable, :trackable, :omniauthable,
     omniauth_providers: [:google_oauth2, :github]
 
+  validates :email, presence: true, uniqueness: true
+
   has_many :identities
   has_one :employment
 
