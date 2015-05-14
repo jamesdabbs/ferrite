@@ -5,6 +5,8 @@ class User < ActiveRecord::Base
   has_many :identities
   has_one :employment
 
+  has_many :submission_reviews
+
   def instructor?
     employment.present?
   end

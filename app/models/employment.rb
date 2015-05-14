@@ -5,6 +5,8 @@ class Employment < ActiveRecord::Base
 
   has_many :courses, foreign_key: :instructor_id
 
+  validates_presence_of :user, :first_name, :last_name, :email
+
   def name
     "#{first_name} #{last_name}".strip
   end

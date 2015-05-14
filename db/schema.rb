@@ -24,12 +24,16 @@ ActiveRecord::Schema.define(version: 20150505122617) do
     t.datetime "updated_at", null: false
   end
 
+  add_index "assignments", ["course_id"], name: "index_assignments_on_course_id", using: :btree
+
   create_table "campuses", force: :cascade do |t|
     t.string   "name",       null: false
     t.json     "aliases"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  add_index "campuses", ["name"], name: "index_campuses_on_name", unique: true, using: :btree
 
   create_table "courses", force: :cascade do |t|
     t.integer "instructor_id", null: false
@@ -44,16 +48,8 @@ ActiveRecord::Schema.define(version: 20150505122617) do
   add_index "courses", ["instructor_id"], name: "index_courses_on_instructor_id", using: :btree
   add_index "courses", ["topic_id"], name: "index_courses_on_topic_id", using: :btree
 
-  create_table "course_members", force: :cascade do |t|
-    t.integer "course_id", null: false
-    t.integer "user_id",   null: false
-    t.integer "role_id",   null: false
-  end
-
-  add_index "course_members", ["course_id"], name: "index_course_members_on_course_id", using: :btree
-
   create_table "employments", force: :cascade do |t|
-    t.integer "user_id"
+    t.integer "user_id",           null: false
     t.string  "teamwork_id"
     t.string  "first_name",        null: false
     t.string  "last_name",         null: false
@@ -75,6 +71,7 @@ ActiveRecord::Schema.define(version: 20150505122617) do
     t.datetime "updated_at", null: false
   end
 
+  add_index "identities", ["provider", "uid"], name: "index_identities_on_provider_and_uid", using: :btree
   add_index "identities", ["user_id"], name: "index_identities_on_user_id", using: :btree
 
   create_table "projects", force: :cascade do |t|
@@ -85,17 +82,29 @@ ActiveRecord::Schema.define(version: 20150505122617) do
 
   add_index "projects", ["topic_id"], name: "index_projects_on_topic_id", using: :btree
 
-  create_table "roles", force: :cascade do |t|
-    t.string "name", null: false
+  create_table "submission_reviews", force: :cascade do |t|
+    t.integer  "reviewer_id"
+    t.integer  "submission_id"
+    t.integer  "score"
+    t.json     "comments"
+    t.datetime "created_at"
   end
 
-  add_index "roles", ["name"], name: "index_roles_on_name", unique: true, using: :btree
+  add_index "submission_reviews", ["submission_id"], name: "index_submission_reviews_on_submission_id", using: :btree
 
-  create_table "student_assignments", force: :cascade do |t|
-    t.integer "user_id",    null: false
-    t.integer "student_id", null: false
-    t.string  "issue_id"
+  create_table "submissions", force: :cascade do |t|
+    t.integer  "user_id",       null: false
+    t.integer  "assignment_id", null: false
+    t.string   "repo"
+    t.string   "commit"
+    t.integer  "comfort"
+    t.integer  "hours_spent"
+    t.integer  "happiness"
+    t.json     "comments"
+    t.datetime "created_at"
   end
+
+  add_index "submissions", ["assignment_id"], name: "index_submissions_on_assignment_id", using: :btree
 
   create_table "topics", force: :cascade do |t|
     t.string   "title",      null: false
@@ -104,14 +113,10 @@ ActiveRecord::Schema.define(version: 20150505122617) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "user_roles", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "role_id"
-  end
+  add_index "topics", ["title"], name: "index_topics_on_title", unique: true, using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",               default: "", null: false
-    t.boolean  "admin"
     t.datetime "remember_created_at"
     t.integer  "sign_in_count",       default: 0,  null: false
     t.datetime "current_sign_in_at"
@@ -124,12 +129,18 @@ ActiveRecord::Schema.define(version: 20150505122617) do
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
 
-  add_foreign_key "course_members", "course"
-  add_foreign_key "course_members", "user"
-  add_foreign_key "course_members", "role"
+  add_foreign_key "assignments", "courses"
+  add_foreign_key "assignments", "projects"
+  add_foreign_key "courses", "campuses"
+  add_foreign_key "courses", "employments", column: "instructor_id"
+  add_foreign_key "courses", "topics"
   add_foreign_key "employments", "campuses"
   add_foreign_key "employments", "topics"
+  add_foreign_key "employments", "users"
   add_foreign_key "identities", "users"
-  add_foreign_key "user_roles", "roles"
-  add_foreign_key "user_roles", "users"
+  add_foreign_key "projects", "topics"
+  add_foreign_key "submission_reviews", "submissions"
+  add_foreign_key "submission_reviews", "users", column: "reviewer_id"
+  add_foreign_key "submissions", "assignments"
+  add_foreign_key "submissions", "users"
 end

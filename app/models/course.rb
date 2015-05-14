@@ -3,6 +3,8 @@ class Course < ActiveRecord::Base
   belongs_to :topic
   belongs_to :instructor, class_name: "Employment"
 
+  has_many :assignments
+
   validates_presence_of :campus, :topic, :instructor, :start_on, :organization
 
   # TODO: validate JSON data structure
