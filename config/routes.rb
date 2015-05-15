@@ -13,6 +13,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :projects, only: [:index, :new, :create, :show, :edit, :update]
+
   scope :staff do
     get   '/' => 'staff#index'
     patch '/' => 'staff#update'
