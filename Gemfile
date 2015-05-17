@@ -29,6 +29,9 @@ gem 'bootstrap_form', github: 'bootstrap-ruby/rails-bootstrap-forms'
 gem 'httparty'
 gem 'octokit'
 
+gem 'redcarpet'
+gem 'paper_trail'
+
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller'

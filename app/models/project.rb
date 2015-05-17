@@ -5,5 +5,7 @@ class Project < ActiveRecord::Base
 
   validates_presence_of :topic, :title, :description
 
+  has_paper_trail
+
   # TODO: add a tagging system
 end

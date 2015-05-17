@@ -1,6 +1,7 @@
-  small #{@project.topic.title}
+small #{@project.topic.title}
 
-  h1
-    = @project.title
+h1
+  = @project.title
 
-  p #{@project.description}
+.well
+  = markdown @project.description

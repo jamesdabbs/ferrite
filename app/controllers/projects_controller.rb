@@ -1,8 +1,6 @@
 class ProjectsController < ApplicationController
   def index
-    @projects = policy_scope(Project).includes(:topic, :title, :description)
-    @projects = Project.all
-    # It seems to work only with the first line for policy-scoping AND the second line
+    @projects = policy_scope(Project)
   end
 
   def new

@@ -6,4 +6,8 @@ module ApplicationHelper
   def short_date d
     d.strftime "%b '%y"
   end
+
+  def markdown str
+    $markdown.render(str).html_safe
+  end
 end

@@ -130,6 +130,9 @@ GEM
       oauth2 (~> 1.0)
       omniauth (~> 1.2)
     orm_adapter (0.5.0)
+    paper_trail (3.0.8)
+      activerecord (>= 3.0, < 5.0)
+      activesupport (>= 3.0, < 5.0)
     pg (0.18.1)
     pry (0.10.1)
       coderay (~> 1.1.0)
@@ -177,6 +180,7 @@ GEM
       thor (>= 0.18.1, < 2.0)
     rake (10.4.2)
     rdoc (4.2.0)
+    redcarpet (3.2.3)
     responders (2.1.0)
       railties (>= 4.2.0, < 5)
     rollbar (1.5.2)
@@ -253,6 +257,7 @@ DEPENDENCIES
   omniauth
   omniauth-github
   omniauth-google-oauth2
+  paper_trail
   pg
   pry
   pry-rails
@@ -261,6 +266,7 @@ DEPENDENCIES
   quiet_assets
   rails (= 4.2.1)
   rails_12factor
+  redcarpet
   rollbar
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)

@@ -22,6 +22,8 @@ html lang="en"
     = nav_bar brand: "TIY", responsive: true do
       = menu_group do
         = menu_item "Courses", courses_path
+        - if current_user.instructor?
+          = menu_item "Projects", projects_path
       = menu_group pull: :right do
         - if current_user
           = menu_item current_user.email
