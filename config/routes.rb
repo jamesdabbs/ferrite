@@ -20,5 +20,9 @@ Rails.application.routes.draw do
     patch '/' => 'staff#update'
   end
 
+  authenticate :user, lambda { |u| u.admin? } do
+    mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
+  end
+
   root to: 'pages#login'
 end

@@ -32,6 +32,8 @@ gem 'octokit'
 gem 'redcarpet'
 gem 'paper_trail'
 
+gem 'rails_admin'
+
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller'

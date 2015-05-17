@@ -9,6 +9,10 @@ class User < ActiveRecord::Base
 
   has_many :submission_reviews
 
+  def admin?
+    instructor?
+  end
+
   def instructor?
     employment.present?
   end
