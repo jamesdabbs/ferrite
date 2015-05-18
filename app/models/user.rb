@@ -7,14 +7,18 @@ class User < ActiveRecord::Base
   has_many :identities
   has_one :employment
 
+  has_many :submissions
   has_many :submission_reviews
-
-  def admin?
-    instructor?
-  end
 
   def instructor?
     employment.present?
+  end
+  # TODO: these probably need to be finer grained
+  def admin?
+    instructor?
+  end
+  def student?
+    !instructor?
   end
 
   def link_github_account auth
@@ -35,8 +39,23 @@ class User < ActiveRecord::Base
   def github_organizations
     @_github_organizations ||= github_client.organizations
   end
+  def recent_repos
+    @_recent_repos ||= github_client.repos(nil, sort: :pushed, direction: :desc)
+  end
 
   def new_course opts={}
     employment.new_course opts
+  end
+
+  def active_course
+    # FIXME: what about users in multiple courses?
+    @_active_course ||= Course.
+      where(organization: github_organizations.map(&:login)).
+      order(start_on: :desc).
+      first
+  end
+
+  def submissions_for assignment
+    submissions.where assignment: assignment
   end
 end

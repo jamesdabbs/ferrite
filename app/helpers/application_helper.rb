@@ -7,6 +7,14 @@ module ApplicationHelper
     d.strftime "%b '%y"
   end
 
+  def time_to_now dt
+    return "" unless dt
+    date      = dt.strftime "%b %d @ %l%P"
+    distance  = time_ago_in_words dt
+    direction = Time.now < dt ? "from now" : "ago"
+    "#{date} <small><i>(#{distance} #{direction})</i></small>".html_safe
+  end
+
   def markdown str
     $markdown.render(str).html_safe
   end

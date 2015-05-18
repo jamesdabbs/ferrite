@@ -1,0 +1,10 @@
+table.table.table-striped.table-hover
+  thead
+    tr
+      th Project
+      th Due
+  tbody
+    - @assignments.each do |assignment|
+      tr
+        td= link_to assignment.project.title, assignment
+        td= time_to_now assignment.due_at

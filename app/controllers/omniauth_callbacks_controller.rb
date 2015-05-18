@@ -16,7 +16,9 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
       sign_in user
     end
 
-    destination = session.delete(:_after_github_auth_redirect_path) || courses_path
+    destination   = session.delete(:_after_github_auth_redirect_path)
+    destination ||= user.instructor? ? courses_path : assignments_path
+
     redirect_to destination
   end
 

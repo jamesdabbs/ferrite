@@ -4,5 +4,10 @@ class Submission < ActiveRecord::Base
 
   has_many :reviews, class_name: "SubmissionReview"
 
-  validates_presence_of :user, :assignment, :repo, :commit, :comfort
+  validates_presence_of :user, :assignment, :repo, :comfort
+  validates_inclusion_of :comfort, in: (1..5)
+
+  def note_current_commit client
+    update commit: client.commits(repo).first.sha
+  end
 end

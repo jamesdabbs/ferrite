@@ -1,0 +1,30 @@
+h1= @assignment.project.title
+- if @assignment.due_at
+  h5 Due #{time_to_now @assignment.due_at}
+
+.row
+  .col-md-6
+    .well
+      = markdown @assignment.project.description
+  .col-md-6
+    .well
+
+      = bootstrap_form_for @submission, url: submit_assignment_path(@assignment), layout: :horizontal do |f|
+        / TODO: what if we have > ~50 repos?
+        = f.collection_select :repo, current_user.recent_repos, :full_name, :name, prompt: "Select a Github repo"
+        = f.number_field :comfort, min: 1, max: 5
+        = f.number_field :hours_spent
+        = f.text_area :comments, rows: 6
+        = f.primary
+
+    - if @submissions.any?
+      table.table.table-striped.table-condensed
+        thead
+          tr
+            th
+            th Comfort
+        tbody
+          - @submissions.each do |submission|
+            tr
+              td #{time_ago_in_words submission.created_at} ago
+              td= submission.comfort

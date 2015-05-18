@@ -15,6 +15,12 @@ Rails.application.routes.draw do
 
   resources :projects, only: [:index, :new, :create, :show, :edit, :update]
 
+  resources :assignments, only: [:index, :show] do
+    member do
+      post :submit
+    end
+  end
+
   scope :staff do
     get   '/' => 'staff#index'
     patch '/' => 'staff#update'
