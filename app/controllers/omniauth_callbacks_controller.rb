@@ -17,7 +17,8 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     end
 
     destination   = session.delete(:_after_github_auth_redirect_path)
-    destination ||= user.instructor? ? courses_path : assignments_path
+    destination ||= current_user.instructor? ? courses_path : assignments_path
+    # ^Changed user to current_user because User was showing up as NIL
 
     redirect_to destination
   end
