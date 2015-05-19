@@ -24,6 +24,7 @@ class CoursesController < ApplicationController
   def show
     @course = Course.find params[:id]
     authorize @course
+    @assignments = @course.assignments.order(due_at: :desc).includes :project
   end
 
   def sync

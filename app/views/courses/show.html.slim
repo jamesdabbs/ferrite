@@ -15,3 +15,15 @@ table.table.table-condensed
     td
       - if @course.github_org
         = link_to @course.github_org.name, @course.github_org.url
+
+h2 Assignments
+table.table.table-striped
+  thead
+    tr
+      th Name
+      th Due
+  tbody
+    - @assignments.each do |assignment|
+      tr
+        td= link_to assignment.project.title, assignment
+        td= time_to_now assignment.due_at

@@ -56,6 +56,10 @@ class User < ActiveRecord::Base
   end
 
   def submissions_for assignment
-    submissions.where assignment: assignment
+    submissions.where(assignment: assignment).order(created_at: :desc)
+  end
+
+  def admin_label
+    email
   end
 end

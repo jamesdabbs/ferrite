@@ -20,4 +20,8 @@ class Employment < ActiveRecord::Base
     }
     courses.new defaults.merge opts
   end
+
+  def admin_label
+    name
+  end
 end

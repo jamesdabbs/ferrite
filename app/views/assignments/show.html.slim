@@ -12,7 +12,7 @@ h1= @assignment.project.title
       = bootstrap_form_for @submission, url: submit_assignment_path(@assignment), layout: :horizontal do |f|
         / TODO: what if we have > ~50 repos?
         = f.collection_select :repo, current_user.recent_repos, :full_name, :name, prompt: "Select a Github repo"
-        = f.number_field :comfort, min: 1, max: 5
+        = f.collection_select :comfort, (1..5).to_a, :to_s, :to_s, selected: "3", help: "1 = I have no idea what I'm doing; 5 = This was a piece of cake"
         = f.number_field :hours_spent
         = f.text_area :comments, rows: 6
         = f.primary
