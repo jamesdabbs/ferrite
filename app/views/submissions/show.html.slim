@@ -11,7 +11,7 @@ table.table.table-striped
       th Due
   tbody
       tr
-        td= link_to "Github repo", @submission.link_to_github
+        td= link_to "Github repo", @submission.link_to_github, :target => '_blank'
         / ^ Make this open in a new tab.
         td= @submission.comfort
 
