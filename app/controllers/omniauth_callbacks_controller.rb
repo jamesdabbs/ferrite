@@ -11,6 +11,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     if user_signed_in?
       # TODO: do we care if this is staff or student?
       current_user.link_github_account auth_data
+      user = current_user
     else
       user = GithubOauth.new(auth_data).find_or_register!
       sign_in user

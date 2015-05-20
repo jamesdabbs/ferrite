@@ -5,6 +5,6 @@ class Assignment < ActiveRecord::Base
   validates_presence_of :project, :course
 
   def admin_label
-    project.title
+    project.try :title
   end
 end
