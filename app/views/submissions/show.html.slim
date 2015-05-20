@@ -1,8 +1,26 @@
 h1= @submission.assignment.project.title
 
+h2
+  #{@submission.user.email}
 
-.row
-  .col-md-6
-    .well
-  .col-md-6
-    .well
+h2 
+table.table.table-striped
+  thead
+    tr
+      th Name
+      th Due
+  tbody
+      tr
+        td= link_to "Github repo", @submission.link_to_github
+        / ^ Make this open in a new tab.
+        td= @submission.comfort
+
+/ - if current_user.instructor?
+/ = bootstrap_form_for @submissionreview, layout: :horizontal do |f|
+/   = f.number_field :score
+/   = f.text_area :comments, rows: 15
+/   = f.primary
+
+
+/ - if @submission.reviews.any?
+/   = link_to "Create Project", new_project_path, class: "btn btn-default"
