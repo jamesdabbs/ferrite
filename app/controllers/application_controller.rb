@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   after_action :verify_authorized, except: :index, if: :user_space?
   after_action :verify_policy_scoped, only: :index, if: :user_space?
 
-  rescue_from Github::NotAuthorized do |e|
+  rescue_from GH::NotAuthorized do |e|
     session[:_after_github_auth_redirect_path] = request.path
     redirect_to user_omniauth_authorize_path(:github)
   end
