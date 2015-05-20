@@ -13,6 +13,6 @@ class Submission < ActiveRecord::Base
 
   def link_to_github
     # CREATE THE LINK
-    "https://github.com/" + repo
+    "https://github.com/#{repo}/tree/#{commit}"
   end
 end

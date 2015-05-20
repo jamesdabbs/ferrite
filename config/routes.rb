@@ -22,7 +22,7 @@ Rails.application.routes.draw do
   end
 
   resources :submissions, only: [:show] do
-    resources :submissionreviews, only: [:show, :create]
+    resources :submission_reviews, only: [:show, :create]
   end
 
   scope :staff do

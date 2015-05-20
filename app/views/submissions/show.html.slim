@@ -12,14 +12,13 @@ table.table.table-striped
   tbody
       tr
         td= link_to "Github repo", @submission.link_to_github, :target => '_blank'
-        / ^ Make this open in a new tab.
         td= @submission.comfort
 
-/ - if current_user.instructor?
-/ = bootstrap_form_for @submissionreview, layout: :horizontal do |f|
-/   = f.number_field :score
-/   = f.text_area :comments, rows: 15
-/   = f.primary
+- if current_user.instructor?
+  = bootstrap_form_for @submissionreview, url: submission_submission_reviews_path(@submission), layout: :horizontal do |f|
+    = f.collection_select :score, (1..5).to_a, :to_s, :to_s, include_blank: true
+    = f.text_area :comments, rows: 10
+    = f.primary
 
 
 / - if @submission.reviews.any?

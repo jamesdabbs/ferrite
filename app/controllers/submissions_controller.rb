@@ -7,6 +7,7 @@ class SubmissionsController < ApplicationController
     @submission = Submission.find params[:id]
     @submissionsreviews = @submission.reviews.all
     authorize @submission
+    @submissionreview = SubmissionReview.new
   end
 
 end
