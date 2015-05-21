@@ -14,28 +14,17 @@ table.table.table-striped
         td= @submission.comfort
         td= @submission.hours_spent
 
-- if @submission.reviews.any? 
-      h3 
-      table.table.table-striped
-        thead
-          tr
-            th Comments
-            th Score
-            th Reviewer
-            th Date
-        tbody
-         - @submission.reviews.each do |review|
-            tr
-              td= review.comments
-              td= review.score
-              td= review.reviewer.email.split("@").first
-              td= "#{review.created_at.month}/#{review.created_at.day}"
+- @submission.reviews.each do |review|
+  .well
+    h3 #{review.score} / #{SubmissionReview.max_score}
+    h4
+      By #{review.reviewer.name}
+      ' 
+      small #{time_ago_in_words review.created_at} ago
+    = markdown review.general_comments
 
 - if current_user.instructor?
-  = bootstrap_form_for @submissionreview, url: submission_submission_reviews_path(@submission), layout: :horizontal do |f|
-    = f.collection_select :score, (1..5).to_a, :to_s, :to_s, include_blank: true
+  = bootstrap_form_for @review, url: submission_submission_reviews_path(@submission), layout: :horizontal do |f|
+    = f.collection_select :score, SubmissionReview::SCORE_RANGE.to_a, :to_s, :to_s, include_blank: true
     = f.text_area :comments, rows: 10
     = f.primary
-
-
-

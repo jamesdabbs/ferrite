@@ -1,29 +1,29 @@
 class SubmissionReviewsController < ApplicationController
   def new
-    @submissionreview = SubmissionReview.new
+    @submission_review = SubmissionReview.new
   end
-  
+
   def create
     @submission = Submission.find params[:submission_id]
-    @submissionreview = @submission.reviews.new(create_params)
-    @submissionreview.reviewer = current_user
+    @submission_review = @submission.reviews.new(create_params)
+    @submission_review.reviewer = current_user
     # Comments expects to be a json field, needs to be an object
-    @submissionreview.comments = {"general" => create_params[:comments]}
-    authorize @submissionreview
-    if @submissionreview.save
+    @submission_review.comments = {"general" => create_params[:comments]}
+    authorize @submission_review
+    if @submission_review.save
       redirect_to @submission, notice: "Review saved!"
     else
-      redirect_to @submission, alert: "Review not saved."
+      redirect_to @submission, alert: "Review not saved - #{@submission_review.errors.full_messages.to_sentence}"
     end
   end
 
   def show
-    @submissionreview = SubmissionReview.find params[:id]
-    @submission = @submissionreview.find params[:submission_id]
-    
+    @submission_review = SubmissionReview.find params[:id]
+    @submission = @submission_review.find params[:submission_id]
   end
 
 private
+
   def create_params
     params.require(:submission_review).permit :submission_id, :score, :comments
   end

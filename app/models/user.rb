@@ -65,7 +65,8 @@ class User < ActiveRecord::Base
 
   # FIXME: store this on the user?
   def name
-    identities.first.data["info"]["name"]
+    name = identities.first.data["info"]["name"]
+    name.blank? ? email : name
   rescue
     email
   end
