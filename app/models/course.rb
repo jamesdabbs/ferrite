@@ -20,7 +20,7 @@ class Course < ActiveRecord::Base
   end
 
   def github_org
-    Github::Organization.new organization if organization
+    GH::Organization.new organization if organization
   end
 
   def admin_label

@@ -82,16 +82,17 @@ GEM
       thor (~> 0.14)
     font-awesome-rails (4.3.0.0)
       railties (>= 3.2, < 5.0)
+    github-markup (1.3.3)
     globalid (0.3.5)
       activesupport (>= 4.1.0)
     haml (4.0.6)
       tilt
     hashie (3.4.1)
-    httparty (0.13.4)
+    httparty (0.13.5)
       json (~> 1.8)
       multi_xml (>= 0.5.2)
     i18n (0.7.0)
-    jbuilder (2.2.13)
+    jbuilder (2.2.16)
       activesupport (>= 3.0.0, < 5)
       multi_json (~> 1.2)
     jquery-rails (4.0.3)
@@ -143,14 +144,14 @@ GEM
     paper_trail (3.0.8)
       activerecord (>= 3.0, < 5.0)
       activesupport (>= 3.0, < 5.0)
-    pg (0.18.1)
+    pg (0.18.2)
     pry (0.10.1)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
     pry-rails (0.3.4)
       pry (>= 0.9.10)
-    puma (2.11.2)
+    puma (2.11.3)
       rack (>= 1.1, < 2.0)
     pundit (1.0.0)
       activesupport (>= 3.0.0)
@@ -211,7 +212,7 @@ GEM
     remotipart (1.2.1)
     responders (2.1.0)
       railties (>= 4.2.0, < 5)
-    rollbar (1.5.2)
+    rollbar (1.5.3)
       multi_json (~> 1.3)
     safe_yaml (1.0.4)
     sass (3.4.13)
@@ -279,6 +280,7 @@ DEPENDENCIES
   devise
   factory_girl_rails
   figaro
+  github-markup
   httparty
   jbuilder (~> 2.0)
   jquery-rails

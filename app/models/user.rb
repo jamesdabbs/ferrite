@@ -32,7 +32,7 @@ class User < ActiveRecord::Base
       identity = identities.where(provider: 'github').first!
       Octokit::Client.new access_token: identity.data["credentials"]["token"]
     rescue ActiveRecord::RecordNotFound => e
-      raise Github::NotAuthorized, "No linked Github account"
+      raise GH::NotAuthorized, "No linked Github account"
     end
   end
 
@@ -65,7 +65,8 @@ class User < ActiveRecord::Base
 
   # FIXME: store this on the user?
   def name
-    identities.first.data["info"]["name"]
+    name = identities.first.data["info"]["name"]
+    name.blank? ? email : name
   rescue
     email
   end

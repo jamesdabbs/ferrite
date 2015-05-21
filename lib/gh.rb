@@ -1,4 +1,4 @@
-module Github
+module GH
   class Error < StandardError; end
   class NotAuthorized < Error; end
 

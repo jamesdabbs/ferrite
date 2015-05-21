@@ -24,6 +24,6 @@ module ApplicationHelper
   end
 
   def markdown str
-    $markdown.render(str).html_safe
+    GitHub::Markup.render("README.md", str).html_safe
   end
 end

@@ -11,6 +11,7 @@ class Assignment < ActiveRecord::Base
   end
 
   def admin_label
-    title
+    # we won't have a project when new'ing
+    project.try :title
   end
 end

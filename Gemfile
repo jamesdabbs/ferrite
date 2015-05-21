@@ -29,6 +29,7 @@ gem 'bootstrap_form', github: 'bootstrap-ruby/rails-bootstrap-forms'
 gem 'httparty'
 gem 'octokit'
 
+gem 'github-markup', require: 'github/markup'
 gem 'redcarpet'
 gem 'paper_trail'
 
