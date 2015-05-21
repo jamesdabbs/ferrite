@@ -11,7 +11,9 @@ class AssignmentsController < ApplicationController
     @project = Project.find params[:project_id]
     @assignment = @project.assignments.new(assignment_params)
     authorize @assignment
-    redirect_to @assignment
+      if @assignment.save
+        redirect_to @assignment, notice: "Assignment created."
+      end
   end
 
   def show
@@ -44,7 +46,7 @@ class AssignmentsController < ApplicationController
 private
 
   def assignment_params
-    params.require(:assignment).permit :project, :course, :due_at
+    params.require(:assignment).permit :project, :course_id, :due_at
   end
 
   def submission_params
