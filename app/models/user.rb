@@ -2,7 +2,8 @@ class User < ActiveRecord::Base
   devise :rememberable, :trackable, :omniauthable,
     omniauth_providers: [:google_oauth2, :github]
 
-  validates :email, presence: true, uniqueness: true
+  validates_presence_of :email, :name
+  validates_uniqueness_of :email
 
   has_many :identities
   has_one :employment
@@ -60,14 +61,6 @@ class User < ActiveRecord::Base
   end
 
   def admin_label
-    email
-  end
-
-  # FIXME: store this on the user?
-  def name
-    name = identities.first.data["info"]["name"]
-    name.blank? ? email : name
-  rescue
     email
   end
 end

@@ -12,7 +12,6 @@ class SubmissionTable
   end
 
   def users
-    # FIXME: n+1
     @users.map &:name
   end
 

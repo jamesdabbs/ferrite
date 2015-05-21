@@ -8,11 +8,10 @@ class SubmissionReview < ActiveRecord::Base
 
   validates_inclusion_of :score, in: SCORE_RANGE
 
-  def self.max_score
-    SCORE_RANGE.max
-  end
-
   def general_comments
     comments["general"]
+  end
+  def general_comments= c
+    comments.merge! "general" => c
   end
 end
