@@ -1,0 +1,5 @@
+ =bootstrap_form_for @project, layout: :horizontal do |f|
+  = f.collection_select :topic_id, Topic.all, :id, :title
+  = f.text_field :title
+  = f.text_area :description, rows: 20
+  = f.primary

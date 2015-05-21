@@ -13,7 +13,9 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :projects, only: [:index, :new, :create, :show, :edit, :update]
+  resources :projects, only: [:index, :new, :create, :show, :edit, :update] do
+    resources :assignments, only: [:create]
+  end
 
   resources :assignments, only: [:index, :show] do
     member do

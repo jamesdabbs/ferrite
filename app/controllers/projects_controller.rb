@@ -22,14 +22,18 @@ class ProjectsController < ApplicationController
 
   def edit
     @project = Project.find params[:id]
+    authorize @project
   end
 
   def update
     @project = Project.find params[:id]
+    authorize @project
+    redirect_to @project
   end
 
   def show
     @project = Project.find params[:id]
+    @assignment = @project.assignments.new
     authorize @project
   end
 

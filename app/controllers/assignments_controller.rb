@@ -3,6 +3,17 @@ class AssignmentsController < ApplicationController
     @assignments = policy_scope(Assignment).includes :project
   end
 
+  def new
+    @assignment = Assignment.new
+  end
+
+  def create
+    @project = Project.find params[:project_id]
+    @assignment = @project.assignments.new(assignment_params)
+    authorize @assignment
+    redirect_to @assignment
+  end
+
   def show
     # TODO: clean up duplication between here and submit action
     @assignment = Assignment.find params[:id]
@@ -31,6 +42,10 @@ class AssignmentsController < ApplicationController
   end
 
 private
+
+  def assignment_params
+    params.require(:assignment).permit :project, :course, :due_at
+  end
 
   def submission_params
     params.require(:submission).permit :comments, :comfort, :repo, :hours_spent
