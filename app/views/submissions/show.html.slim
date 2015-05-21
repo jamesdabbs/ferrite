@@ -1,18 +1,18 @@
-h1= @submission.assignment.project.title
+h1 #{link_to @submission.assignment.title, @submission.assignment} - #{@submission.user.name}
 
-h2
-  #{@submission.user.email}
-
-h2 
 table.table.table-striped
   thead
     tr
-      th Name
-      th Due
+      th Repo
+      th Submitted
+      th Comfort
+      th Hours Spent
   tbody
       tr
         td= link_to @submission.repo, @submission.link_to_github, :target => '_blank'
+        td= time_to_deadline @submission.created_at, @submission.assignment.due_at
         td= @submission.comfort
+        td= @submission.hours_spent
 
 - if @submission.reviews.any? 
       h3 

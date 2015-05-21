@@ -22,8 +22,11 @@ table.table.table-striped
     tr
       th Name
       th Due
+      th Submissions
   tbody
     - @assignments.each do |assignment|
       tr
         td= link_to assignment.project.title, assignment
         td= time_to_now assignment.due_at
+        / FIXME: n+1
+        td= assignment.submissions.count

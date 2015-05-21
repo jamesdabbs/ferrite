@@ -7,8 +7,12 @@ class AssignmentsController < ApplicationController
     # TODO: clean up duplication between here and submit action
     @assignment = Assignment.find params[:id]
     authorize @assignment
-    @submissions = current_user.submissions_for @assignment
-    @submission  = @submissions.new
+    if current_user.instructor?
+      @submissions = @assignment.submissions
+    else
+      @submissions = current_user.submissions_for @assignment
+      @submission  = @submissions.new
+    end
   end
 
   def submit
