@@ -11,6 +11,8 @@ class User < ActiveRecord::Base
   has_many :submissions
   has_many :submission_reviews
 
+  belongs_to :active_course, class_name: "Course"
+
   def instructor?
     employment.present?
   end
@@ -48,13 +50,13 @@ class User < ActiveRecord::Base
     employment.new_course opts
   end
 
-  def active_course
-    # FIXME: what about users in multiple courses?
-    @_active_course ||= Course.
-      where(organization: github_organizations.map(&:login)).
-      order(start_on: :desc).
-      first
-  end
+  #def active_course
+  #  # FIXME: what about users in multiple courses?
+  #  @_active_course ||= Course.
+  #    where(organization: github_organizations.map(&:login)).
+  #    order(start_on: :desc).
+  #    first
+  #end
 
   def submissions_for assignment
     submissions.where(assignment: assignment).order(created_at: :desc)
