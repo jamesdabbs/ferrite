@@ -11,8 +11,25 @@ table.table.table-striped
       th Due
   tbody
       tr
-        td= link_to "Github repo", @submission.link_to_github, :target => '_blank'
+        td= link_to @submission.repo, @submission.link_to_github, :target => '_blank'
         td= @submission.comfort
+
+- if @submission.reviews.any? 
+      h3 
+      table.table.table-striped
+        thead
+          tr
+            th Comments
+            th Score
+            th Reviewer
+            th Date
+        tbody
+         - @submission.reviews.each do |review|
+            tr
+              td= review.comments
+              td= review.score
+              td= review.reviewer.email.split("@").first
+              td= "#{review.created_at.month}/#{review.created_at.day}"
 
 - if current_user.instructor?
   = bootstrap_form_for @submissionreview, url: submission_submission_reviews_path(@submission), layout: :horizontal do |f|
@@ -21,5 +38,4 @@ table.table.table-striped
     = f.primary
 
 
-/ - if @submission.reviews.any?
-/   = link_to "Create Project", new_project_path, class: "btn btn-default"
+
