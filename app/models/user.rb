@@ -62,4 +62,12 @@ class User < ActiveRecord::Base
   def admin_label
     email
   end
+
+  # FIXME: store this on the user?
+  def name
+    name = identities.first.data["info"]["name"]
+    name.blank? ? email : name
+  rescue
+    email
+  end
 end

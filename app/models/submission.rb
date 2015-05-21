@@ -10,4 +10,8 @@ class Submission < ActiveRecord::Base
   def note_current_commit client
     update commit: client.commits(repo).first.sha
   end
+
+  def link_to_github
+    "https://github.com/#{repo}/tree/#{commit}"
+  end
 end

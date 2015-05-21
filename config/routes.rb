@@ -21,6 +21,10 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :submissions, only: [:show] do
+    resources :submission_reviews, only: [:show, :create]
+  end
+
   scope :staff do
     get   '/' => 'staff#index'
     patch '/' => 'staff#update'

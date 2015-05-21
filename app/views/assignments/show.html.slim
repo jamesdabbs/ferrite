@@ -7,24 +7,31 @@ h1= @assignment.project.title
     .well
       = markdown @assignment.project.description
   .col-md-6
-    .well
-
-      = bootstrap_form_for @submission, url: submit_assignment_path(@assignment), layout: :horizontal do |f|
-        / TODO: what if we have > ~50 repos?
-        = f.collection_select :repo, current_user.recent_repos, :full_name, :name, prompt: "Select a Github repo"
-        = f.collection_select :comfort, (1..5).to_a, :to_s, :to_s, include_blank: true, help: "1 = I have no idea what I'm doing; 5 = This was a piece of cake"
-        = f.number_field :hours_spent
-        = f.text_area :comments, rows: 6
-        = f.primary
+    - if current_user.student?
+      .well
+        = bootstrap_form_for @submission, url: submit_assignment_path(@assignment), layout: :horizontal do |f|
+          / TODO: what if we have > ~50 repos?
+          = f.collection_select :repo, current_user.recent_repos, :full_name, :name, prompt: "Select a Github repo"
+          = f.collection_select :comfort, (1..5).to_a, :to_s, :to_s, include_blank: true, help: "1 = I have no idea what I'm doing; 5 = This was a piece of cake"
+          = f.number_field :hours_spent
+          = f.text_area :comments, rows: 6
+          = f.primary
 
     - if @submissions.any?
       table.table.table-striped.table-condensed
         thead
           tr
             th
+            - if current_user.instructor?
+              th By
+            th Submitted
             th Comfort
         tbody
           - @submissions.each do |submission|
             tr
+              td= link_to "View", submission, class: "btn btn-default"
+              - if current_user.instructor?
+                / FIXME: this is an n+1
+                td= submission.user.name
               td #{time_ago_in_words submission.created_at} ago
               td= submission.comfort

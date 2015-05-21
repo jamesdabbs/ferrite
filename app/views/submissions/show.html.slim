@@ -1,0 +1,30 @@
+h1 #{link_to @submission.assignment.title, @submission.assignment} - #{@submission.user.name}
+
+table.table.table-striped
+  thead
+    tr
+      th Repo
+      th Submitted
+      th Comfort
+      th Hours Spent
+  tbody
+      tr
+        td= link_to @submission.repo, @submission.link_to_github, :target => '_blank'
+        td= time_to_deadline @submission.created_at, @submission.assignment.due_at
+        td= @submission.comfort
+        td= @submission.hours_spent
+
+- @submission.reviews.each do |review|
+  .well
+    h3 #{review.score} / #{SubmissionReview.max_score}
+    h4
+      By #{review.reviewer.name}
+      ' 
+      small #{time_ago_in_words review.created_at} ago
+    = markdown review.general_comments
+
+- if current_user.instructor?
+  = bootstrap_form_for @review, url: submission_submission_reviews_path(@submission), layout: :horizontal do |f|
+    = f.collection_select :score, SubmissionReview::SCORE_RANGE.to_a, :to_s, :to_s, include_blank: true
+    = f.text_area :comments, rows: 10
+    = f.primary
