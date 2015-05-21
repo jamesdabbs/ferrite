@@ -22,11 +22,17 @@ table.table.table-striped
     tr
       th Name
       th Due
-      th Submissions
+      - @submission_table.users.each do |user|
+        th= user
   tbody
     - @assignments.each do |assignment|
       tr
         td= link_to assignment.project.title, assignment
         td= time_to_now assignment.due_at
-        / FIXME: n+1
-        td= assignment.submissions.count
+        - @submission_table.row_for_assignment(assignment).each do |submission|
+          td
+            - if submission
+              / FIXME: n+1
+              - btn_class = submission.reviewed? ? "success" : "default"
+              = link_to submission, class: "btn btn-#{btn_class}" do
+                = icon "plus"

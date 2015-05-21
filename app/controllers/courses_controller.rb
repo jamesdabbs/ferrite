@@ -24,7 +24,8 @@ class CoursesController < ApplicationController
   def show
     @course = Course.find params[:id]
     authorize @course
-    @assignments = @course.assignments.order(due_at: :desc).includes :project
+    @assignments      = @course.assignments.order(due_at: :desc).includes :project
+    @submission_table = SubmissionTable.new policy_scope(Submission)
   end
 
   def sync
