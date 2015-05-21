@@ -15,6 +15,14 @@ module ApplicationHelper
     "#{date} <small><i>(#{distance} #{direction})</i></small>".html_safe
   end
 
+  def time_to_deadline actual, deadline
+    return "" unless actual
+    date     = actual.strftime "%b %d @ %l%P"
+    distance = distance_of_time_in_words actual, deadline
+    direction = actual < deadline ? "before" : "after"
+    "#{date} <small><i>(#{distance} #{direction})</i></small>".html_safe
+  end
+
   def markdown str
     $markdown.render(str).html_safe
   end
