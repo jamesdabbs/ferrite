@@ -1,6 +1,6 @@
 class AssignmentsController < ApplicationController
   def index
-    @assignments = policy_scope(Assignment).includes :project
+    @assignments = policy_scope(Assignment).order(created_at: :desc).includes :project, :submissions
   end
 
   def new

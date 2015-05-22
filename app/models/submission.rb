@@ -14,4 +14,8 @@ class Submission < ActiveRecord::Base
   def link_to_github
     "https://github.com/#{repo}/tree/#{commit}"
   end
+
+  def reviewed?
+    reviews.exists?
+  end
 end

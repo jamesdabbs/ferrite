@@ -7,8 +7,7 @@ class SubmissionReviewsController < ApplicationController
     @submission = Submission.find params[:submission_id]
     @submission_review = @submission.reviews.new(create_params)
     @submission_review.reviewer = current_user
-    # Comments expects to be a json field, needs to be an object
-    @submission_review.comments = {"general" => create_params[:comments]}
+    @submission_review.general_comments = create_params[:comments]
     authorize @submission_review
     if @submission_review.save
       redirect_to @submission, notice: "Review saved!"

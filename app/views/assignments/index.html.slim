@@ -3,8 +3,16 @@ table.table.table-striped.table-hover
     tr
       th Project
       th Due
+      th Submissions
   tbody
     - @assignments.each do |assignment|
       tr
         td= link_to assignment.project.title, assignment
         td= time_to_now assignment.due_at
+        td
+          / FIXME: this is the wrong place for this auth check
+          .btn-group
+            - assignment.submissions.where(user: current_user).each do |submission|
+              - btn_class = submission.reviewed? ? "default" : "warning"
+              = link_to "View", submission, class: "btn btn-#{btn_class}"
+            = link_to "Add", assignment, class: "btn btn-success"

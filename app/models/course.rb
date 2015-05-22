@@ -6,6 +6,7 @@ class Course < ActiveRecord::Base
   has_many :assignments
 
   validates_presence_of :campus, :topic, :instructor, :start_on, :organization
+  validates_uniqueness_of :organization
 
   # TODO: validate JSON data structure
   #validate def check_json_data_schema

@@ -35,6 +35,8 @@ gem 'paper_trail'
 
 gem 'rails_admin'
 
+gem 'slack-notifier'
+
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
@@ -48,7 +50,9 @@ group :development, :test do
 end
 
 group :test do
+  gem 'capybara'
   gem 'factory_girl_rails'
+  gem 'faker'
   gem 'simplecov'
 end
 

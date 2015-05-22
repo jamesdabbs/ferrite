@@ -16,7 +16,6 @@ table.table.table-striped
 
 - @submission.reviews.each do |review|
   .well
-    h3 #{review.score} / #{SubmissionReview.max_score}
     h4
       By #{review.reviewer.name}
       ' 

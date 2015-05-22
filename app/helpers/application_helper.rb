@@ -26,4 +26,8 @@ module ApplicationHelper
   def markdown str
     GitHub::Markup.render("README.md", str).html_safe
   end
+
+  def icon name
+    "<i class='glyphicon glyphicon-#{name}'></i>".html_safe
+  end
 end
