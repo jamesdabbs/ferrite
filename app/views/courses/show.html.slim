@@ -32,7 +32,5 @@ table.table.table-striped
         - @submission_table.row_for_assignment(assignment).each do |submission|
           td
             - if submission
-              / FIXME: n+1
-              - btn_class = submission.reviewed? ? "success" : "default"
-              = link_to submission, class: "btn btn-#{btn_class}" do
-                = icon "plus"
+              - btn_class = @submission_table.reviewed?(submission) ? "success" : "default"
+              = link_to submission.comfort, submission, class: "btn btn-#{btn_class}"

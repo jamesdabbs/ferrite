@@ -6,5 +6,8 @@ class PagesController < ApplicationController
   end
 
   def login
+    if course = current_user.try(:active_course)
+      redirect_to course
+    end
   end
 end
