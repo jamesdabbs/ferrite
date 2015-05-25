@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
   has_one :employment
 
   has_many :submissions
-  has_many :submission_reviews
+  has_many :submission_reviews, foreign_key: "reviewer_id"
 
   belongs_to :active_course, class_name: "Course"
 
@@ -17,7 +17,8 @@ class User < ActiveRecord::Base
   has_many :courses, through: :memberships
 
   has_many :slack_team_memberships, class_name: "Slack::TeamMembership"
-  has_many :slack_teams, through: :slack_team_memberships, source: :team
+  # TODO: figure out why this breaks Rails admin (if it's needed)
+  #has_many :slack_teams, through: :slack_team_memberships, source: :team
 
   def self.from_github_identities uids
     identities = Identity.where(provider: "github", uid: uids).includes :user
