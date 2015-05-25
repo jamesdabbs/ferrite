@@ -34,3 +34,18 @@ table.table.table-striped
             - if submission
               - btn_class = @submission_table.reviewed?(submission) ? "success" : "default"
               = link_to submission.comfort, submission, class: "btn btn-#{btn_class}"
+
+h2 Roster
+= link_to "Sync", sync_course_path(@course), method: :post, class: "btn btn-default"
+table.table.table-striped
+  thead
+    tr
+      th Name
+      th Github
+      th Role
+  tbody
+    - @memberships.each do |m|
+      tr
+        td= m.user.name
+        td= m.user.github_username
+        td= m.role.capitalize

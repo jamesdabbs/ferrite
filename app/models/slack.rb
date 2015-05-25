@@ -1,0 +1,3 @@
+module Slack
+  # Note: this does collide with Slack::Notifier an so is not autoloaded ...
+end

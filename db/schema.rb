@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150521223901) do
+ActiveRecord::Schema.define(version: 20150525202653) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,6 +35,15 @@ ActiveRecord::Schema.define(version: 20150521223901) do
 
   add_index "campuses", ["name"], name: "index_campuses_on_name", unique: true, using: :btree
 
+  create_table "course_members", force: :cascade do |t|
+    t.integer "course_id"
+    t.integer "user_id"
+    t.string  "role",      null: false
+  end
+
+  add_index "course_members", ["course_id"], name: "index_course_members_on_course_id", using: :btree
+  add_index "course_members", ["user_id"], name: "index_course_members_on_user_id", using: :btree
+
   create_table "courses", force: :cascade do |t|
     t.integer "instructor_id", null: false
     t.integer "topic_id",      null: false
@@ -42,10 +51,12 @@ ActiveRecord::Schema.define(version: 20150521223901) do
     t.string  "organization",  null: false
     t.date    "start_on",      null: false
     t.json    "reflections",   null: false
+    t.integer "slack_team_id"
   end
 
   add_index "courses", ["campus_id"], name: "index_courses_on_campus_id", using: :btree
   add_index "courses", ["instructor_id"], name: "index_courses_on_instructor_id", using: :btree
+  add_index "courses", ["slack_team_id"], name: "index_courses_on_slack_team_id", using: :btree
   add_index "courses", ["topic_id"], name: "index_courses_on_topic_id", using: :btree
 
   create_table "employments", force: :cascade do |t|
@@ -81,6 +92,25 @@ ActiveRecord::Schema.define(version: 20150521223901) do
   end
 
   add_index "projects", ["topic_id"], name: "index_projects_on_topic_id", using: :btree
+
+  create_table "slack_team_memberships", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "team_id"
+    t.string   "username"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "slack_team_memberships", ["team_id"], name: "index_slack_team_memberships_on_team_id", using: :btree
+  add_index "slack_team_memberships", ["user_id"], name: "index_slack_team_memberships_on_user_id", using: :btree
+  add_index "slack_team_memberships", ["username"], name: "index_slack_team_memberships_on_username", using: :btree
+
+  create_table "slack_teams", force: :cascade do |t|
+    t.string   "name"
+    t.string   "webhook_url"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
   create_table "submission_reviews", force: :cascade do |t|
     t.integer  "reviewer_id"
@@ -127,6 +157,7 @@ ActiveRecord::Schema.define(version: 20150521223901) do
     t.datetime "updated_at"
     t.string   "name",                default: "", null: false
     t.integer  "active_course_id"
+    t.string   "github_username"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
@@ -144,14 +175,19 @@ ActiveRecord::Schema.define(version: 20150521223901) do
 
   add_foreign_key "assignments", "courses"
   add_foreign_key "assignments", "projects"
+  add_foreign_key "course_members", "courses"
+  add_foreign_key "course_members", "users"
   add_foreign_key "courses", "campuses"
   add_foreign_key "courses", "employments", column: "instructor_id"
+  add_foreign_key "courses", "slack_teams"
   add_foreign_key "courses", "topics"
   add_foreign_key "employments", "campuses"
   add_foreign_key "employments", "topics"
   add_foreign_key "employments", "users"
   add_foreign_key "identities", "users"
   add_foreign_key "projects", "topics"
+  add_foreign_key "slack_team_memberships", "slack_teams", column: "team_id"
+  add_foreign_key "slack_team_memberships", "users"
   add_foreign_key "submission_reviews", "submissions"
   add_foreign_key "submission_reviews", "users", column: "reviewer_id"
   add_foreign_key "submissions", "assignments"

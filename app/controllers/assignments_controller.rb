@@ -37,6 +37,7 @@ class AssignmentsController < ApplicationController
 
     if @submission.save
       @submission.note_current_commit current_user.github_client
+      @assignment.course.notify_of_submission @submission
       redirect_to @assignment
     else
       render :show

@@ -29,7 +29,7 @@ html lang="en"
 
       = menu_group pull: :right do
         - if current_user
-          = menu_item current_user.email
+          = menu_item current_user.email, profile_path
           = menu_item "Log out", sign_out_path, method: :delete
         - else
           = menu_item "Log in", user_omniauth_authorize_path(:google_oauth2)

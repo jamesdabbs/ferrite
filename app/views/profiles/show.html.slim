@@ -1,0 +1,17 @@
+h1
+  = @user.name
+  ' 
+  small= @user.email
+
+= bootstrap_form_for @user, url: profile_path, layout: :horizontal do |f|
+  = f.text_field :name
+  = f.collection_select :active_course_id, @user.courses, :id, :organization
+  = f.primary
+
+h3 Identities
+table.table.table-condensed
+  thead
+  - @user.identities.each do |identity|
+    tr
+      td= identity.provider
+      td= identity.username

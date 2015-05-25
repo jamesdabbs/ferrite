@@ -5,6 +5,11 @@ class Course < ActiveRecord::Base
 
   has_many :assignments
 
+  has_many :memberships, class_name: "CourseMember"
+  has_many :members, through: :memberships, source: :user
+
+  belongs_to :slack_team, class_name: "Slack::Team"
+
   validates_presence_of :campus, :topic, :instructor, :start_on, :organization
   validates_uniqueness_of :organization
 
@@ -26,5 +31,26 @@ class Course < ActiveRecord::Base
 
   def admin_label
     organization
+  end
+
+  def ensure_users_are_members users
+    users.each do |user|
+      memberships.where(user: user).first_or_create! do |m|
+        m.role = "student"
+      end
+    end
+  end
+
+  def notify_of_submission submission
+    return unless slack_team
+
+    membership     = slack_team.membership_for instructor.user
+    submission_url = Rails.application.routes.url_helpers.submission_url submission
+
+    message = Slack::Message.new(
+      to:   membership,
+      body: "New submission by #{submission.user.name} - visit #{submission_url} to review"
+    )
+    message.deliver
   end
 end

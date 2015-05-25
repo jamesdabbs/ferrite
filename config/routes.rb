@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  # TODO: make this per-environment
+  default_url_options host: "ferrite.herokuapp.com"
+
   devise_for :users, controllers: { omniauth_callbacks: "omniauth_callbacks" }
 
   get '/sign_in' => 'pages#login', as: :sign_in
@@ -6,7 +9,13 @@ Rails.application.routes.draw do
     delete '/sign_out' => 'devise/sessions#destroy', as: :sign_out
   end
 
+  resource :profile, only: [:show, :update]
+
   resources :courses, only: [:index, :new, :create, :show] do
+    member do
+      post :sync
+    end
+
     resources :weeks, only: [:show], param: :number do
       get   ':subject' => 'reflections#edit'
       patch ':subject' => 'reflections#update'

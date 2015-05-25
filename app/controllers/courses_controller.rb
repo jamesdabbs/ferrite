@@ -26,9 +26,15 @@ class CoursesController < ApplicationController
     authorize @course
     @assignments      = @course.assignments.order(due_at: :desc).includes :project
     @submission_table = SubmissionTable.new policy_scope(Submission)
+    @memberships      = @course.memberships.includes user: :identities
   end
 
   def sync
+    course = Course.find params[:id]
+    authorize course
+    sync = GithubSync.new current_user.github_client
+    sync.pull_course_members course
+    redirect_to :back, notice: "Sync'd members from Github"
   end
 
 private

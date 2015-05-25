@@ -13,6 +13,17 @@ class User < ActiveRecord::Base
 
   belongs_to :active_course, class_name: "Course"
 
+  has_many :memberships, class_name: "CourseMember"
+  has_many :courses, through: :memberships
+
+  has_many :slack_team_memberships
+  has_many :slack_teams, through: :slack_team_memberships
+
+  def self.from_github_identities uids
+    identities = Identity.where(provider: "github", uid: uids).includes :user
+    identities.map &:user
+  end
+
   def instructor?
     employment.present?
   end
@@ -35,28 +46,25 @@ class User < ActiveRecord::Base
       identity = identities.where(provider: 'github').first!
       Octokit::Client.new access_token: identity.data["credentials"]["token"]
     rescue ActiveRecord::RecordNotFound => e
-      raise GH::NotAuthorized, "No linked Github account"
+      # FIXME: need a better way to inject this
+      if Rails.env.test?
+        Octokit::Client.new
+      else
+        raise GH::NotAuthorized, "No linked Github account"
+      end
     end
   end
 
   def github_organizations
     @_github_organizations ||= github_client.organizations
   end
-  def recent_repos
-    @_recent_repos ||= github_client.repos(nil, sort: :pushed, direction: :desc)
+  def recent_repos login=nil
+    @_recent_repos ||= github_client.repos(github_username, sort: :pushed, direction: :desc)
   end
 
   def new_course opts={}
     employment.new_course opts
   end
-
-  #def active_course
-  #  # FIXME: what about users in multiple courses?
-  #  @_active_course ||= Course.
-  #    where(organization: github_organizations.map(&:login)).
-  #    order(start_on: :desc).
-  #    first
-  #end
 
   def submissions_for assignment
     submissions.where(assignment: assignment).order(created_at: :desc)
