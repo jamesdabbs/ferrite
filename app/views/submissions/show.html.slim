@@ -17,7 +17,7 @@ table.table.table-striped
 - @submission.reviews.each do |review|
   .well
     h4
-      By #{review.reviewer.name}
+      = "By #{review.reviewer.name}"
       ' 
       small #{time_ago_in_words review.created_at} ago
     = markdown review.general_comments

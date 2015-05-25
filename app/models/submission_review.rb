@@ -16,6 +16,7 @@ class SubmissionReview < ActiveRecord::Base
     comments["general"]
   end
   def general_comments= c
-    comments.merge! "general" => c
+    self.comments ||= {}
+    self.comments.merge! "general" => c
   end
 end

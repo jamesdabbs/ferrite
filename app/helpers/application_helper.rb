@@ -24,6 +24,7 @@ module ApplicationHelper
   end
 
   def markdown str
+    return "" unless str # otherwise v will render the readme ...
     GitHub::Markup.render("README.md", str).html_safe
   end
 

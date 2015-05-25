@@ -5,9 +5,8 @@ class SubmissionReviewsController < ApplicationController
 
   def create
     @submission = Submission.find params[:submission_id]
-    @submission_review = @submission.reviews.new(create_params)
+    @submission_review = @submission.reviews.new create_params
     @submission_review.reviewer = current_user
-    @submission_review.general_comments = create_params[:comments]
     authorize @submission_review
     if @submission_review.save
       redirect_to @submission, notice: "Review saved!"
@@ -24,6 +23,6 @@ class SubmissionReviewsController < ApplicationController
 private
 
   def create_params
-    params.require(:submission_review).permit :submission_id, :score, :comments
+    params.require(:submission_review).permit(:score, :general_comments)
   end
 end
