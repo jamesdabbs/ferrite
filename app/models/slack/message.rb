@@ -25,7 +25,7 @@ module Slack
         Message.deliveries.push self
       else
         notifier = Notifier.new team.webhook_url, username: "Ferrite"
-        notifier.ping body, channel: username
+        notifier.ping body, channel: "@#{username}"
       end
     end
   end
