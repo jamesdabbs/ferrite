@@ -24,6 +24,7 @@ html lang="en"
         - if current_user.try :instructor?
           = menu_item "Courses", courses_path
           = menu_item "Projects", projects_path
+          = menu_item "Slack", slack_teams_path
         - elsif current_user.try :student?
           = menu_item "Assignments", assignments_path
 

@@ -5,8 +5,7 @@ class CoursesController < ApplicationController
 
   def new
     authorize :course, :create?
-    @organizations = current_user.github_organizations
-    @course        = current_user.new_course
+    @course = current_user.new_course
   end
 
   def create
@@ -16,7 +15,6 @@ class CoursesController < ApplicationController
     if @course.save
       redirect_to @course, success: "Course added"
     else
-      @organizations = current_user.github_organizations
       render :new
     end
   end
@@ -27,6 +25,21 @@ class CoursesController < ApplicationController
     @assignments      = @course.assignments.order(due_at: :desc).includes :project
     @submission_table = SubmissionTable.new policy_scope(Submission)
     @memberships      = @course.memberships.includes user: :identities
+  end
+
+  def edit
+    @course = Course.find params[:id]
+    authorize @course
+  end
+
+  def update
+    @course = Course.find params[:id]
+    authorize @course
+    if @course.update update_params
+      redirect_to @course, success: "Course updated"
+    else
+      render :edit
+    end
   end
 
   def sync
@@ -41,5 +54,9 @@ private
 
   def create_params
     params.require(:course).permit :campus_id, :topic_id, :start_on, :organization
+  end
+
+  def update_params
+    params.require(:course).permit :start_on, :organization, :slack_team_id, :slack_room
   end
 end

@@ -1,7 +1,7 @@
-h1
-  = @course.topic.title
-  '
-  small #{@course.campus.name} - #{short_date @course.start_on}
+- if policy(@course).edit?
+  = link_to "Edit", edit_course_path(@course), class: "btn btn-default"
+
+= render partial: 'header', locals: { course: @course }
 
 table.table.table-condensed
   tr
@@ -15,6 +15,12 @@ table.table.table-condensed
     td
       - if @course.github_org
         = link_to @course.github_org.name, @course.github_org.url
+  tr
+    th Slack Team
+    td= @course.slack_team.try :name
+  tr
+    th Slack Room
+    td= @course.slack_room
 
 h2 Assignments
 table.table.table-striped

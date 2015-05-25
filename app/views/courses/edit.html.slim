@@ -1,6 +1,8 @@
+= render partial: 'header', locals: { course: @course }
+
 = bootstrap_form_for @course, layout: :horizontal do |f|
-  = f.collection_select :campus_id, Campus.all, :id, :name
-  = f.collection_select :topic_id, Topic.all, :id, :title
   = f.date_select :start_on
   = f.collection_select :organization, current_user.github_organizations, :login, :login, prompt: "Select a Github organization", help: "N.B. the Github API does not allow creating new organizations from here. Sorry :("
+  = f.collection_select :slack_team_id, Slack::Team.all, :id, :name, include_blank: true
+  = f.text_field :slack_room
   = f.primary

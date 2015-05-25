@@ -6,6 +6,7 @@ module Slack
     has_many :members, through: :memberships
 
     validates_presence_of :name, :webhook_url
+    validates_uniqueness_of :name, :webhook_url
 
     def membership_for user
       memberships.where(user: user).first!

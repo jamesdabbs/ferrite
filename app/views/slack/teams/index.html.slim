@@ -1,0 +1,17 @@
+table.table.table-striped
+  thead
+    tr
+      th Team
+      th Webhook
+  tbody
+    - @teams.each do |team|
+      tr
+        td= team.name
+        td= team.webhook_url
+
+.well
+  h3 New Team
+  = bootstrap_form_for Slack::Team.new, layout: :horizontal do |f|
+    = f.text_field :name
+    = f.text_field :webhook_url
+    = f.primary

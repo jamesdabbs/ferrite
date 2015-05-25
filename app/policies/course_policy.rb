@@ -3,7 +3,11 @@ class CoursePolicy < ApplicationPolicy
     user.instructor?
   end
 
+  def update?
+    record.instructor.user == user
+  end
+
   def sync?
-    user.instructor?
+    update?
   end
 end

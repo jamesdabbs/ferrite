@@ -11,7 +11,7 @@ Rails.application.routes.draw do
 
   resource :profile, only: [:show, :update]
 
-  resources :courses, only: [:index, :new, :create, :show] do
+  resources :courses, except: :delete do
     member do
       post :sync
     end
@@ -39,6 +39,10 @@ Rails.application.routes.draw do
   scope :staff do
     get   '/' => 'staff#index'
     patch '/' => 'staff#update'
+  end
+
+  namespace :slack do
+    resources :teams, only: [:index, :create]
   end
 
   authenticate :user, lambda { |u| u.admin? } do
