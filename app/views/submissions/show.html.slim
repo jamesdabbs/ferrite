@@ -25,5 +25,5 @@ table.table.table-striped
 - if current_user.instructor?
   = bootstrap_form_for @review, url: submission_submission_reviews_path(@submission), layout: :horizontal do |f|
     = f.collection_select :score, SubmissionReview::SCORE_RANGE.to_a, :to_s, :to_s, include_blank: true
-    = f.text_area :comments, rows: 10
+    = f.text_area :general_comments, rows: 10
     = f.primary

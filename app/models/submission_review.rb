@@ -8,6 +8,10 @@ class SubmissionReview < ActiveRecord::Base
 
   validates_inclusion_of :score, in: SCORE_RANGE
 
+  after_initialize do
+    self.comments ||= {}
+  end
+
   def general_comments
     comments["general"]
   end
