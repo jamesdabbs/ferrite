@@ -17,7 +17,7 @@ class SubmissionTable
   end
 
   def users
-    @users.map &:name
+    @users
   end
 
   def row_for_assignment assignment

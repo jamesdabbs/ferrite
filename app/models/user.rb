@@ -41,6 +41,10 @@ class User < ActiveRecord::Base
     identity
   end
 
+  def github_account_url
+    "//github.com/#{github_username}"
+  end
+
   def github_client
     @_github_client ||= begin
       identity = identities.where(provider: 'github').first!
