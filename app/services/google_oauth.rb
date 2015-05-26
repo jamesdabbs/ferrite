@@ -41,7 +41,9 @@ private
 
   def ensure_user identity
     return if identity.user
-    user = User.where(email: auth.info.email).first_or_create!
+    user = User.where(email: auth.info.email).first_or_create! do |u|
+      u.name = auth.info.name
+    end
     identity.update! user: user
   end
 
