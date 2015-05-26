@@ -59,8 +59,8 @@ class Course < ActiveRecord::Base
 
     url     = Rails.application.routes.url_helpers.assignment_url assignment
     message = Slack::Message.new(
-      to: self,
-      message: "New assignment posted @ #{url} | #{assignment.project.title}"
+      to:   self,
+      body: "New assignment posted @ #{url} | #{assignment.project.title}"
     )
     message.deliver
   end
