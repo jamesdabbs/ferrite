@@ -1,9 +1,9 @@
 class SubmissionReviewPolicy < ApplicationPolicy
-  def new?
+  def create?
     user.instructor?
   end
 
-  def create?
-    user.instructor?
+  def update?
+    record.reviewer == user
   end
 end

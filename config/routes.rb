@@ -33,7 +33,7 @@ Rails.application.routes.draw do
   end
 
   resources :submissions, only: [:show] do
-    resources :submission_reviews, only: [:show, :create]
+    resources :submission_reviews, only: [:show, :create, :edit, :update]
   end
 
   scope :staff do
