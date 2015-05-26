@@ -41,6 +41,7 @@ class Course < ActiveRecord::Base
     end
   end
 
+  # TODO: extract these vvv
   def notify_of_submission submission
     return unless slack_team
 
@@ -61,6 +62,20 @@ class Course < ActiveRecord::Base
     message = Slack::Message.new(
       to:   self,
       body: "New assignment posted @ #{url} | #{assignment.project.title}"
+    )
+    message.deliver
+  end
+
+  def notify_of_new_review submission
+    return unless slack_team
+
+    membership = slack_team.membership_for submission.user
+    return unless membership
+
+    url     = Rails.application.routes.url_helpers.submission_url submission
+    message = Slack::Message.new(
+      to:   membership,
+      body: "New review of #{submission.assignment.project.title} posted @ #{url}"
     )
     message.deliver
   end

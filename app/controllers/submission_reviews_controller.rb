@@ -9,6 +9,7 @@ class SubmissionReviewsController < ApplicationController
     @submission_review.reviewer = current_user
     authorize @submission_review
     if @submission_review.save
+      @submission.assignment.course.notify_of_new_review @submission
       redirect_to @submission, notice: "Review saved!"
     else
       redirect_to @submission, alert: "Review not saved - #{@submission_review.errors.full_messages.to_sentence}"
