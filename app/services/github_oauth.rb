@@ -24,6 +24,7 @@ private
     return if identity.user
     user = User.where(email: auth.info.email).first_or_create! do |u|
       u.name = auth.info.name.blank? ? auth.info.nickname : auth.info.name
+      u.github_username = auth.info.nickname
     end
     identity.update! user: user
   end
