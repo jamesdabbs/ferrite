@@ -13,7 +13,7 @@ class SubmissionTable
     @users = @users.to_a
 
     # Grab the list of reviews
-    @reviewed = Set.new SubmissionReview.where(submission: submissions)
+    @reviewed = Set.new SubmissionReview.where(submission: submissions).pluck(:submission_id)
   end
 
   def users
@@ -26,6 +26,6 @@ class SubmissionTable
   end
 
   def reviewed? submission
-    @reviewed.include? submission
+    @reviewed.include? submission.id
   end
 end
