@@ -53,4 +53,15 @@ class Course < ActiveRecord::Base
     )
     message.deliver
   end
+
+  def notify_of_new_assignment assignment
+    return unless slack_team
+
+    url     = Rails.application.routes.url_helpers.assignment_url assignment
+    message = Slack::Message.new(
+      to: self,
+      message: "New assignment posted @ #{url} | #{assignment.project.title}"
+    )
+    message.deliver
+  end
 end
