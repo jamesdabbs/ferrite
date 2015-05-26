@@ -17,8 +17,7 @@ class User < ActiveRecord::Base
   has_many :courses, through: :memberships
 
   has_many :slack_team_memberships, class_name: "Slack::TeamMembership"
-  # TODO: figure out why this breaks Rails admin (if it's needed)
-  #has_many :slack_teams, through: :slack_team_memberships, source: :team
+  has_many :slack_teams, through: :slack_team_memberships, source: :team
 
   def self.from_github_identities uids
     identities = Identity.where(provider: "github", uid: uids).includes :user
