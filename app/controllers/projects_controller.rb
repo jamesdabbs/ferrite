@@ -34,7 +34,7 @@ class ProjectsController < ApplicationController
   def show
     @project = Project.find params[:id]
     @assignment = @project.assignments.new
-    @assignment.due_at = Assignment.tomorrow_at 2
+    @assignment.due_at = Assignment.tomorrow_at 2, current_user.time_zone
     authorize @project
   end
 

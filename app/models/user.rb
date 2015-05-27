@@ -1,9 +1,14 @@
 class User < ActiveRecord::Base
+  def self.time_zones
+    ActiveSupport::TimeZone.us_zones
+  end
+
   devise :rememberable, :trackable, :omniauthable,
     omniauth_providers: [:google_oauth2, :github]
 
-  validates_presence_of :email, :name
+  validates_presence_of :email, :name, :time_zone
   validates_uniqueness_of :email
+  validates_inclusion_of :time_zone, in: time_zones.map(&:name)
 
   has_many :identities
   has_one :employment
