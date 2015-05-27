@@ -1,9 +1,14 @@
 class User < ActiveRecord::Base
+  def self.time_zones
+    ActiveSupport::TimeZone.us_zones
+  end
+
   devise :rememberable, :trackable, :omniauthable,
     omniauth_providers: [:google_oauth2, :github]
 
-  validates_presence_of :email, :name
+  validates_presence_of :email, :name, :time_zone
   validates_uniqueness_of :email
+  validates_inclusion_of :time_zone, in: time_zones.map(&:name)
 
   has_many :identities
   has_one :employment
@@ -17,8 +22,7 @@ class User < ActiveRecord::Base
   has_many :courses, through: :memberships
 
   has_many :slack_team_memberships, class_name: "Slack::TeamMembership"
-  # TODO: figure out why this breaks Rails admin (if it's needed)
-  #has_many :slack_teams, through: :slack_team_memberships, source: :team
+  has_many :slack_teams, through: :slack_team_memberships, source: :team
 
   def self.from_github_identities uids
     identities = Identity.where(provider: "github", uid: uids).includes :user
@@ -40,6 +44,10 @@ class User < ActiveRecord::Base
     identity = identities.where(provider: 'github').first_or_initialize
     identity.update uid: auth.uid, data: auth.to_h
     identity
+  end
+
+  def github_account_url
+    "//github.com/#{github_username}"
   end
 
   def github_client

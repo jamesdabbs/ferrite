@@ -29,7 +29,7 @@ table.table.table-striped
       th Name
       th Due
       - @submission_table.users.each do |user|
-        th= user
+        th= link_to user.name, user.github_account_url
   tbody
     - @assignments.each do |assignment|
       tr
@@ -48,10 +48,13 @@ table.table.table-striped
     tr
       th Name
       th Github
+      th Slack
       th Role
   tbody
     - @memberships.each do |m|
       tr
         td= m.user.name
-        td= m.user.github_username
+        td= link_to m.user.github_username, m.user.github_account_url
+        / FIXME: n+1
+        td= m.user.slack_team_memberships.where(team: @course.slack_team).first.try(:username)
         td= m.role.capitalize

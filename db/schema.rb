@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150525213215) do
+ActiveRecord::Schema.define(version: 20150527120110) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -147,18 +147,19 @@ ActiveRecord::Schema.define(version: 20150525213215) do
   add_index "topics", ["title"], name: "index_topics_on_title", unique: true, using: :btree
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",               default: "", null: false
+    t.string   "email",               default: "",                           null: false
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",       default: 0,  null: false
+    t.integer  "sign_in_count",       default: 0,                            null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.inet     "current_sign_in_ip"
     t.inet     "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "name",                default: "", null: false
+    t.string   "name",                default: "",                           null: false
     t.integer  "active_course_id"
     t.string   "github_username"
+    t.string   "time_zone",           default: "Eastern Time (US & Canada)", null: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
