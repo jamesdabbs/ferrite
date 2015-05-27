@@ -52,10 +52,10 @@ class CoursesController < ApplicationController
 
   def randomize
     member_array = []
-    @course = Course.find params[:id]
-    authorize @course
-    @memberships = @course.memberships.includes user: :identities
-    @memberships.each {|m| member_array.push(m)}
+    course = Course.find params[:id]
+    authorize course
+    memberships = course.memberships.includes user: :identities
+    memberships.each {|m| member_array.push(m)}
     @memberships = member_array.shuffle!
     redirect_to :back, notice: "Randomized!"
   end
