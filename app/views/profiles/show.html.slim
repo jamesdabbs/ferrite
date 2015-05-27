@@ -15,3 +15,11 @@ table.table.table-condensed
     tr
       td= identity.provider
       td= identity.username
+
+h3 Slack Team Memberships
+table.table.table-condensed
+  thead
+  - @user.slack_team_memberships.each do |team_membership| 
+    tr
+      td= team_membership.team
+      td= team_membership.username
