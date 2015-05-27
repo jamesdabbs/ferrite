@@ -14,6 +14,8 @@ class AssignmentsController < ApplicationController
     if @assignment.save
       @assignment.course.notify_of_new_assignment @assignment
       redirect_to @assignment, notice: "Assignment created."
+    else
+      redirect_to @project
     end
   end
 
