@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.2.0'
+ruby '2.2.2'
 
 
 gem 'rails', '4.2.1'
@@ -51,6 +51,7 @@ end
 
 group :test do
   gem 'capybara'
+  gem 'coveralls', require: false
   gem 'database_cleaner'
   gem 'factory_girl_rails'
   gem 'faker'

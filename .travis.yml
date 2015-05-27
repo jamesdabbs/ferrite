@@ -1,0 +1,13 @@
+language: ruby
+bundler_args: --without development production
+rvm: 2.2.2
+branches:
+  only:
+  - master
+  - production
+notifications:
+  email:
+    recipients:
+    - jamesdabbs@gmail.com
+    on_success: change
+    on_failure: always
