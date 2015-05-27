@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   resources :courses, except: :delete do
     member do
       post :sync
+      get :randomize
     end
 
     resources :weeks, only: [:show], param: :number do

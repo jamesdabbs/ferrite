@@ -50,6 +50,16 @@ class CoursesController < ApplicationController
     redirect_to :back, notice: "Sync'd members from Github"
   end
 
+  def randomize
+    member_array = []
+    @course = Course.find params[:id]
+    authorize @course
+    @memberships = @course.memberships.includes user: :identities
+    @memberships.each {|m| member_array.push(m)}
+    @memberships = member_array.shuffle!
+    redirect_to :back, notice: "Randomized!"
+  end
+
 private
 
   def create_params

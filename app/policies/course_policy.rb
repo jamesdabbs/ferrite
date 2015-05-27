@@ -10,4 +10,8 @@ class CoursePolicy < ApplicationPolicy
   def sync?
     update?
   end
+
+  def randomize?
+    sync?
+  end
 end
