@@ -33,6 +33,7 @@ class ActiveSupport::TestCase
   Warden.test_mode!
 
   include Capybara::DSL
+  Minitest::Reporters.use!
 
   def login user
     login_as user, scope: :user

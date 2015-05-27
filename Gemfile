@@ -47,6 +47,7 @@ end
 group :development, :test do
   gem 'pry'
   gem 'spring'
+  gem 'minitest-reporters'
 end
 
 group :test do
