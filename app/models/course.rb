@@ -50,7 +50,7 @@ class Course < ActiveRecord::Base
 
     message = Slack::Message.new(
       to:   membership,
-      body: "New submission by #{submission.user.name} - visit #{submission_url} to review"
+      body: "New submission for #{submission.assignment.title} by #{submission.user.name} - visit #{submission_url} to review"
     )
     message.deliver
   end
