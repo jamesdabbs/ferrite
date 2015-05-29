@@ -4,7 +4,8 @@ class Course < ActiveRecord::Base
   belongs_to :instructor, class_name: "Employment"
 
   has_many :assignments
-
+  has_many :submissions, through: :assignments
+  
   has_many :memberships, class_name: "CourseMember"
   has_many :members, through: :memberships, source: :user
 
