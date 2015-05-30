@@ -1,6 +1,7 @@
 language: ruby
 bundler_args: --without development production
 rvm: 2.2.2
+env: CI=true
 branches:
   only:
   - master

@@ -233,8 +233,10 @@ Devise.setup do |config|
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
-  config.omniauth :google_oauth2, Figaro.env.google_client_id!, Figaro.env.google_secret!, scope: 'email'
-  config.omniauth :github, Figaro.env.github_client_id!, Figaro.env.github_secret!, scope: 'user:email,read:org'
+  unless ENV["CI"]
+    config.omniauth :google_oauth2, Figaro.env.google_client_id!, Figaro.env.google_secret!, scope: 'email'
+    config.omniauth :github, Figaro.env.github_client_id!, Figaro.env.github_secret!, scope: 'user:email,read:org'
+  end
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
