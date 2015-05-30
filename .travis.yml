@@ -3,6 +3,8 @@ bundler_args: --without development production
 rvm: 2.2.2
 env: CI=true RAILS_ENV=test
 script: rake db:setup test
+addons:
+  postgresql: "9.3"
 branches:
   only:
   - master
