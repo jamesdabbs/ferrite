@@ -1,7 +1,8 @@
 language: ruby
 bundler_args: --without development production
 rvm: 2.2.2
-env: CI=true
+env: CI=true RAILS_ENV=test
+script: rake db:setup test
 branches:
   only:
   - master
