@@ -70,8 +70,11 @@ class Course < ActiveRecord::Base
   def notify_of_new_review submission
     return unless slack_team
 
-    membership = slack_team.membership_for submission.user
-    return unless membership
+    membership = begin
+      slack_team.membership_for submission.user
+    rescue ActiveRecord::RecordNotFound => e
+      return false
+    end
 
     url     = Rails.application.routes.url_helpers.submission_url submission
     message = Slack::Message.new(

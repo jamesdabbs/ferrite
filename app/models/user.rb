@@ -67,7 +67,7 @@ class User < ActiveRecord::Base
   def github_organizations
     @_github_organizations ||= github_client.organizations
   end
-  def recent_repos login=nil
+  def recent_repos
     @_recent_repos ||= github_client.repos(github_username, sort: :pushed, direction: :desc)
   end
 

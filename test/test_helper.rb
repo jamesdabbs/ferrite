@@ -1,10 +1,13 @@
 ENV['RAILS_ENV'] ||= 'test'
 
-require 'simplecov'
-SimpleCov.start 'rails'
+if ENV["CI"]
+  require 'coveralls'
+  Coveralls.wear!
+else
+  require 'simplecov'
+  SimpleCov.start 'rails'
+end
 
-require 'coveralls'
-Coveralls.wear!
 
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
@@ -22,6 +25,10 @@ end
 VCR.configure do |c|
   c.cassette_library_dir = "test/cassettes"
   c.hook_into :webmock
+end
+
+Capybara.add_selector(:link_to) do
+  xpath { |href| ".//a[@href='#{href}']" }
 end
 
 

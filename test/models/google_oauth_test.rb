@@ -6,7 +6,7 @@ class GoogleOauthTest < ActiveSupport::TestCase
       provider: "google_oauth2",
       uid:      "1",
       info: {
-        email:      "james@theironyard.com",
+        email:      "james+oauthtest@theironyard.com",
         first_name: "James",
         last_name:  "Dabbs",
         name:       "James Dabbs"

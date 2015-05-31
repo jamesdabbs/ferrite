@@ -2,16 +2,14 @@ require 'test_helper'
 
 class SubmittingHomeworkTest < ActionDispatch::IntegrationTest
   def setup
-    @course     = FactoryGirl.create :course, :with_slack_team
+    @course     = courses "DC-RoR"
     @instructor = @course.instructor.user
 
+    # TODO: clean this up by fixturing an assignment and course members
     @instructor_slack = FactoryGirl.create :slack_team_membership,
       user: @instructor, team: @course.slack_team
-
     @assignment = FactoryGirl.create :assignment, course: @course
-
     @student = FactoryGirl.create :user, github_username: "rails"
-    # TODO: this should live elsewhere
     FactoryGirl.create :course_member, course: @course, user: @student
   end
 
