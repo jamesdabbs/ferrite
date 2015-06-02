@@ -16,12 +16,9 @@ class AssigningHomeworkTest < ActionDispatch::IntegrationTest
     fill_in("Description", with:"First, get grounds. Next, pour over.") 
     click_button "Create Project"
     assert page.has_content?("Project created.")
-    @project = Project.last
     assert page.has_content?('First, get grounds')
     select(@course.organization, from:'Course')
     click_button("Create Assignment")
-    assert page.has_content?("")
-    @assignment = Assignment.last
     login @student
     assert page.has_content?("First, get grounds.")
   end

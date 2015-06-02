@@ -9,6 +9,6 @@ h1
 
 - if current_user.instructor?
   = bootstrap_form_for @assignment, url: project_assignments_path(@project), layout: :horizontal do |f|
-    = f.collection_select :course_id, Course.all, :id, :organization, selected: current_user.active_course.try(:course_id), include_blank: true
+    = f.collection_select :course_id, Course.all, :id, :organization, selected: current_user.active_course_id, include_blank: true
     = f.datetime_select :due_at
     = f.primary
