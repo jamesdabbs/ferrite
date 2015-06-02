@@ -14,7 +14,7 @@ class ProjectsController < ApplicationController
     authorize @project
 
     if @project.save
-      redirect_to @project, success: "Project created."
+      redirect_to @project, notice: "Project created."
     else
       render :new, alert: "Unable to save project."
     end
