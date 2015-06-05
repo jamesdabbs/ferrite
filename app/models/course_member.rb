@@ -1,6 +1,8 @@
 class CourseMember < ActiveRecord::Base
   Roles = %w( student assistant instructor )
 
+  scope :students, -> { where(role: "student") }
+
   belongs_to :course
   belongs_to :user
 

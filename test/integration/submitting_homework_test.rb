@@ -4,13 +4,9 @@ class SubmittingHomeworkTest < ActionDispatch::IntegrationTest
   def setup
     @course     = courses "DC-RoR"
     @instructor = @course.instructor.user
+    @student    = @course.students.first!
 
-    # TODO: clean this up by fixturing an assignment and course members
-    @instructor_slack = FactoryGirl.create :slack_team_membership,
-      user: @instructor, team: @course.slack_team
     @assignment = FactoryGirl.create :assignment, course: @course
-    @student = FactoryGirl.create :user, github_username: "rails"
-    FactoryGirl.create :course_member, course: @course, user: @student
   end
 
   test "student is a student in this course" do
@@ -38,7 +34,7 @@ class SubmittingHomeworkTest < ActionDispatch::IntegrationTest
 
       # Instructor received notification
       msg = last_slack_message
-      assert_equal msg.to, @instructor_slack
+      assert_equal msg.to.user, @course.instructor.user
       assert_match /new submission/i, msg.body
       assert_includes msg.body, submission_path(@submission)
 
