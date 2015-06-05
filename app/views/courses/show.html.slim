@@ -43,6 +43,7 @@ table.table.table-striped
 
 h2 Roster
 = link_to "Sync", sync_course_path(@course), method: :post, class: "btn btn-default"
+= link_to "Volunteer", random_pick_course_path(@course), class: "btn btn-default"
 table.table.table-striped
   thead
     tr
