@@ -2,3 +2,9 @@ mason:
   email: mason@theironyard.com
 james:
   email: james@theironyard.com
+ferris:
+  email: ferris@example.com
+  github_username: rails
+sloane:
+  email: sloane@example.com
+  github_username: rails

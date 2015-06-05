@@ -14,7 +14,7 @@ class AssignmentPolicy < ApplicationPolicy
 
   class Scope < Scope
     def resolve
-      scope.where(course: user.active_course)
+      scope.where(course: user.courses)
     end
   end
 end

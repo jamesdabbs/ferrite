@@ -2,13 +2,10 @@ require 'test_helper'
 
 class ReviewingSubmissionsTest < ActionDispatch::IntegrationTest
   def setup
-    @course      = courses "DC-RoR"
-    # TODO: clean this up by fixturing an assignment and course members
+    @course = courses "DC-RoR"
     @assignment  = FactoryGirl.create :assignment, course: @course
-    @submissions = 2.times.map do
-      s = FactoryGirl.create :submission, assignment: @assignment
-      FactoryGirl.create :slack_team_membership, team: @course.slack_team, user: s.user
-      s
+    @submissions = @course.students.map do |student|
+      FactoryGirl.create :submission, assignment: @assignment, user: student
     end
   end
 

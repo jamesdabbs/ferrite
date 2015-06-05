@@ -42,6 +42,8 @@ class ActiveSupport::TestCase
   include Capybara::DSL
 
   def login user
+    raise "No user provided" unless user
+    raise "`user` is a #{user.class}" unless user.is_a?(User)
     login_as user, scope: :user
   end
 

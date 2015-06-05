@@ -1,0 +1,8 @@
+ferris:
+  course: DC-RoR
+  user:   ferris
+  role:   student
+sloane:
+  course: DC-RoR
+  user:   sloane
+  role:   student

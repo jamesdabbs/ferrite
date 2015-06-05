@@ -5,9 +5,12 @@ class Course < ActiveRecord::Base
 
   has_many :assignments
   has_many :submissions, through: :assignments
-  
+
   has_many :memberships, class_name: "CourseMember"
   has_many :members, through: :memberships, source: :user
+
+  has_many :student_memberships, -> { students }, class_name: "CourseMember"
+  has_many :students, through: :student_memberships, source: :user
 
   belongs_to :slack_team, class_name: "Slack::Team"
 
