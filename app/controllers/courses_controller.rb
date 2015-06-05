@@ -59,7 +59,10 @@ class CoursesController < ApplicationController
     random_student.save
     @random_student = random_student
     redirect_to :back, notice: "#{@random_student.email} has been randomly chosen."
-    # TODO Test & Make sure that instructors are NOT included in this. 
+    # TODO Test & Make sure that instructors are NOT included in this.
+    # TODO Use the "includes" association to get the user's name.
+    # TODO Should I be using the course_member's object instead?
+    # ^TODO In case students are part of multiple courses?
   end
 
 private

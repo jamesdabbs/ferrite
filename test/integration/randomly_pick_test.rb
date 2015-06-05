@@ -20,10 +20,16 @@ class RandomPickTest < ActionDispatch::IntegrationTest
 
   test "random_pick increments a students' picks" do
     # TODO Where should this test go?
-    # Is this a unit test?
+    # TODO Is this a unit test?
+    # TODO How to find out which student's picks to check?
   end
 
   test "random_pick only chooses students'" do
+    login @instructor
+    visit course_path(@course)
+    click_on "Volunteer"
+    # TODO Why does 'click_on' work here, but not 'click_button'?
+    refute page.has_content?("#{@instructor.email} has been randomly chosen")
   end
 
   test "random_pick is (semi-)random" do
