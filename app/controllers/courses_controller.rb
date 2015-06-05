@@ -50,6 +50,18 @@ class CoursesController < ApplicationController
     redirect_to :back, notice: "Sync'd members from Github"
   end
 
+  def random_pick
+    course = Course.find params[:id]
+    authorize course
+    lowest_pick_number = course.members.order(picks: :desc).first.picks
+    random_student = course.members.where(picks: lowest_pick_number).order("RANDOM()").first
+    random_student.picks += 1
+    random_student.save
+    @random_student = random_student
+    redirect_to :back, notice: "#{@random_student.email} has been randomly chosen."
+    # TODO Test & Make sure that instructors are NOT included in this. 
+  end
+
 private
 
   def create_params

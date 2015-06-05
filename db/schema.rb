@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150527120110) do
+ActiveRecord::Schema.define(version: 20150605144238) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -160,6 +160,7 @@ ActiveRecord::Schema.define(version: 20150527120110) do
     t.integer  "active_course_id"
     t.string   "github_username"
     t.string   "time_zone",           default: "Eastern Time (US & Canada)", null: false
+    t.integer  "picks",               default: 0
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
