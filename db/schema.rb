@@ -161,7 +161,6 @@ ActiveRecord::Schema.define(version: 20150605161820) do
     t.integer  "active_course_id"
     t.string   "github_username"
     t.string   "time_zone",           default: "Eastern Time (US & Canada)", null: false
-    t.integer  "picks",               default: 0
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

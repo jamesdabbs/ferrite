@@ -86,4 +86,17 @@ class Course < ActiveRecord::Base
     )
     message.deliver
   end
+
+  def pick_member
+    # TODO Refactor
+    if CourseMember.where(course_id: self.id)
+    lowest_pick_number = CourseMember.where(course_id: self.id, role:"student").order(picks: :desc).first.picks
+    chosen_course_member = CourseMember.where(course_id: 1, role: "student", picks: lowest_pick_number).order("RANDOM()").first
+    chosen_course_member.picks += 1
+    chosen_course_member.save
+    chosen_one = chosen_course_member.user
+    @random_student = chosen_one
+  end
+
+  end
 end
