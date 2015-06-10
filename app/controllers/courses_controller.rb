@@ -53,8 +53,11 @@ class CoursesController < ApplicationController
    def random_pick
     course = Course.find params[:id]
     authorize course, :show?
-    random_student = course.pick_member 
-    redirect_to :back, notice: "#{random_student.name} has been randomly chosen."
+    if random_student = course.pick_member.try(:name)
+      redirect_to :back, notice: "#{random_student} has been randomly chosen."
+    else
+      redirect_to :back, flash: {error: "No students from which to choose."}
+    end
   end
 
 private

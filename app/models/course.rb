@@ -93,7 +93,7 @@ class Course < ActiveRecord::Base
       pick_min = student_memberships.minimum(:picks)
       chosen_course_member = student_memberships.where(picks: pick_min).random
       chosen_course_member.picks += 1
-      chosen_course_member.save
+      chosen_course_member.save!
       chosen_course_member.user
     end
   end
