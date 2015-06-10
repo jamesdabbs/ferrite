@@ -82,4 +82,12 @@ class User < ActiveRecord::Base
   def admin_label
     email
   end
+
+  def assisted_course_ids
+    @_assisted_course_ids ||= memberships.where(role: "assistant").pluck(:course_id)
+  end
+
+  def assists_with? submission
+    assisted_course_ids.include? submission.assignment.course_id
+  end
 end

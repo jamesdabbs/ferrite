@@ -6,7 +6,7 @@ class SubmissionsController < ApplicationController
   def show
     @submission = Submission.find params[:id]
     authorize @submission
-    @review = SubmissionReview.new
+    @review = SubmissionReview.new submission: @submission
   end
 
 end

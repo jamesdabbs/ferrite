@@ -24,7 +24,7 @@ table.table.table-striped
       small #{time_ago_in_words review.created_at} ago
     = markdown review.general_comments
 
-- if current_user.instructor?
+- if policy(@review).create?
   = bootstrap_form_for [@submission, @review], layout: :horizontal do |f|
     = f.collection_select :score, SubmissionReview::SCORE_RANGE.to_a, :to_s, :to_s, include_blank: true
     = f.text_area :general_comments, rows: 10
