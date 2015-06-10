@@ -89,14 +89,12 @@ class Course < ActiveRecord::Base
 
   def pick_member
     # TODO Refactor
-    unless CourseMember.where(course_id: self.id, role:"student").empty?
-    lowest_pick_number = CourseMember.where(course_id: self.id, role:"student").order(picks: :asc).first.picks
-    chosen_course_member = CourseMember.where(course_id: self.id, role: "student", picks: lowest_pick_number).order("RANDOM()").first
-    chosen_course_member.picks += 1
-    chosen_course_member.save
-    chosen_one = chosen_course_member.user
-    @random_student = chosen_one
-  end
-
+    unless student_memberships.empty?
+      pick_min = student_memberships.minimum(:picks)
+      chosen_course_member = student_memberships.where(picks: pick_min).random
+      chosen_course_member.picks += 1
+      chosen_course_member.save
+      chosen_course_member.user
+    end
   end
 end

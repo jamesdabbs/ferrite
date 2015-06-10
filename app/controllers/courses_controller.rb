@@ -52,9 +52,9 @@ class CoursesController < ApplicationController
 
    def random_pick
     course = Course.find params[:id]
-    authorize course
-    @random_student = course.pick_member 
-    redirect_to :back, notice: "#{@random_student.name} has been randomly chosen."
+    authorize course, :show?
+    random_student = course.pick_member 
+    redirect_to :back, notice: "#{random_student.name} has been randomly chosen."
   end
 
 private

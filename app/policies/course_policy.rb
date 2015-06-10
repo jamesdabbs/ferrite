@@ -10,9 +10,4 @@ class CoursePolicy < ApplicationPolicy
   def sync?
     update?
   end
-
-  def random_pick?
-    user.instructor?
-  end
-
 end

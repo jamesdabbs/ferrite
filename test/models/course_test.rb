@@ -10,6 +10,7 @@ class CourseTest < ActiveSupport::TestCase
 
   def test_it_increments_picks_when_student_has_been_picked
     @course = courses "DC-RoR"
+    assert (@course.members.count >= 2), "Course doesn't have enough members to pick."
     first_student_picked = @course.pick_member
     first_pick = CourseMember.where(course_id: @course.id, user_id: first_student_picked.id).first
     assert_equal first_pick.picks, 1
@@ -21,10 +22,5 @@ class CourseTest < ActiveSupport::TestCase
     refute_equal first_pick, second_pick
     users_who_got_picked = CourseMember.where(course_id: @course.id, picks: 1)
     assert_equal users_who_got_picked.count, 2
-  end
-
-  def test_it_picks_someone_who_hasnt_been_picked
-    # student with fewer picks gets picked.
-    # student
   end
 end
