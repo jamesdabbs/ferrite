@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
   validates :time_zone, presence: true, inclusion: { in: time_zones.map(&:name) }
 
   has_many :identities
+  has_many :auth_tokens
   has_one :employment
 
   has_many :submissions

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150629235242) do
+ActiveRecord::Schema.define(version: 20150630180322) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,17 @@ ActiveRecord::Schema.define(version: 20150629235242) do
   end
 
   add_index "assignments", ["course_id"], name: "index_assignments_on_course_id", using: :btree
+
+  create_table "auth_tokens", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "key"
+    t.datetime "expires_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "auth_tokens", ["key"], name: "index_auth_tokens_on_key", using: :btree
+  add_index "auth_tokens", ["user_id"], name: "index_auth_tokens_on_user_id", using: :btree
 
   create_table "campuses", force: :cascade do |t|
     t.string   "name",       null: false
@@ -178,6 +189,7 @@ ActiveRecord::Schema.define(version: 20150629235242) do
 
   add_foreign_key "assignments", "courses"
   add_foreign_key "assignments", "projects"
+  add_foreign_key "auth_tokens", "users"
   add_foreign_key "course_members", "courses"
   add_foreign_key "course_members", "users"
   add_foreign_key "courses", "campuses"

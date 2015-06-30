@@ -11,6 +11,8 @@ Rails.application.routes.draw do
 
   resource :profile, only: [:show, :update]
 
+  resources :auth_tokens, only: [:create, :destroy]
+
   resources :courses, except: :delete do
     member do
       post :sync

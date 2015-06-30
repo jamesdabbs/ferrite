@@ -6,15 +6,12 @@ module Devise
       end
 
       def authenticate!
-        if @key == "mellon"
-          success! User.first
+        token = AuthToken.find_by_key @key
+        if token.try :active?
+          success! token.user
         else
-          fail! "Speak friend and enter"
+          fail! "Invalid auth token"
         end
-        #if token = AuthToken.find_by_key @key
-        #  success! token.user
-        #else
-        #  fail!
       end
     end
   end
