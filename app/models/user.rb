@@ -6,9 +6,8 @@ class User < ActiveRecord::Base
   devise :rememberable, :trackable, :omniauthable,
     omniauth_providers: [:google_oauth2, :github]
 
-  validates_presence_of :email, :name, :time_zone
-  validates_uniqueness_of :email
-  validates_inclusion_of :time_zone, in: time_zones.map(&:name)
+  validates :email, presence: true, uniqueness: true
+  validates :time_zone, presence: true, inclusion: { in: time_zones.map(&:name) }
 
   has_many :identities
   has_one :employment

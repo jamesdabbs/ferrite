@@ -1,14 +1,27 @@
+h3 #{@staff.count} Yardigans
+
 table.table.table-condensed.table-striped.table-hover
   thead
     tr
+      th
       th Name
       th Email
       th Campus
-      th Current Course
+      th Title
+      th Slack
+      th Phone
+      th Skype
   tbody
     - @staff.each do |e|
       tr
+        td
+          img(src=e.slack_avatar(24))
         td= e.name
         td= e.email
+        td= e.campus
         td
-        td
+          = e.current_course
+          small= e.title
+        td= e.slack_username
+        td= e.phone_number
+        td= e.skype_username
