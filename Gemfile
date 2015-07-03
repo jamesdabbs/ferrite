@@ -59,7 +59,6 @@ group :test do
   gem 'faker'
   gem 'launchy'
   gem 'simplecov'
-  gem 'vcr'
   gem 'webmock'
 end
 

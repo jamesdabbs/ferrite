@@ -13,6 +13,9 @@ require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
 require 'capybara/rails'
 
+require 'webmock/minitest'
+WebMock.disable_net_connect! allow_localhost: true
+
 
 begin
   DatabaseCleaner.start
@@ -21,11 +24,6 @@ ensure
   DatabaseCleaner.clean
 end
 
-
-VCR.configure do |c|
-  c.cassette_library_dir = "test/cassettes"
-  c.hook_into :webmock
-end
 
 Capybara.add_selector(:link_to) do
   xpath { |href| ".//a[@href='#{href}']" }
@@ -49,11 +47,5 @@ class ActiveSupport::TestCase
 
   def last_slack_message
     Slack::Message.deliveries.last
-  end
-
-  def vcr
-    VCR.use_cassette method_name, re_record_interval: 7.days do
-      yield
-    end
   end
 end

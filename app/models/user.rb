@@ -55,12 +55,7 @@ class User < ActiveRecord::Base
       identity = identities.where(provider: 'github').first!
       Octokit::Client.new access_token: identity.data["credentials"]["token"]
     rescue ActiveRecord::RecordNotFound => e
-      # FIXME: need a better way to inject this
-      if Rails.env.test?
-        Octokit::Client.new
-      else
-        raise GH::NotAuthorized, "No linked Github account"
-      end
+      raise GH::NotAuthorized, "No linked Github account"
     end
   end
 

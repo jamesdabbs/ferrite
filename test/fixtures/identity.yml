@@ -1,0 +1,14 @@
+ferris:
+  user: ferris
+  provider: github
+  uid: 1
+  data:
+    credentials:
+      token: "xxxxx"
+sloane:
+  user: sloane
+  provider: github
+  uid: 2
+  data:
+    credentials:
+      token: "xxxxxx"

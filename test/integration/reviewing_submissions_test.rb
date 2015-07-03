@@ -38,15 +38,15 @@ class ReviewingSubmissionsTest < ActionDispatch::IntegrationTest
   end
 
   test "students only see their submissions" do
-    vcr do
-      submission = @submissions.first
-      login submission.user
-      visit assignment_path submission.assignment
+    stub_request(:get, /api.github.com/).to_return(body: [])
 
-      find :link_to, submission_path(submission)
-      assert_raises Capybara::ElementNotFound do
-        find :link_to, submission_path(@submissions.last)
-      end
+    submission = @submissions.first
+    login submission.user
+    visit assignment_path submission.assignment
+
+    find :link_to, submission_path(submission)
+    assert_raises Capybara::ElementNotFound do
+      find :link_to, submission_path(@submissions.last)
     end
   end
 
