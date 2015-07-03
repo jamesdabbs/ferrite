@@ -18,9 +18,9 @@ table.table.table-condensed.table-striped.table-hover
           img(src=e.slack_avatar(24))
         td= e.name
         td= e.email
-        td= e.campus
         td
-          = e.current_course
+          = e.current_course.try(:title_without_campus)
+          br
           small= e.title
         td= e.slack_username
         td= e.phone_number

@@ -1,0 +1,24 @@
+= form_tag "/staff", method: :patch do
+  table.table.table-condensed.table-striped.table-hover
+    thead
+      tr
+        th
+        th Name
+        th Email
+        th Campus
+        th Course
+    tbody
+      - @staff.each do |e|
+        tr
+          td
+          td= e.name
+          td= e.email
+          td= collection_select :campus, e.id, @campuses, :id, :name, include_blank: true, selected: e.campus_id
+          / TODO - We don't need the campus name in the title when we have a campus
+          td
+            - if e.campus_id
+              = collection_select :course, e.id, @courses.select { |c| c.campus_id == e.campus_id }, :id, :title_without_campus, include_blank: true, selected: e.current_course_id
+            - else
+              = collection_select :course, e.id, @courses, :id, :full_title, include_blank: true, selected: e.current_course_id
+
+  button.btn.btn-default Save

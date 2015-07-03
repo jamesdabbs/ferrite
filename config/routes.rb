@@ -40,6 +40,7 @@ Rails.application.routes.draw do
 
   scope :staff do
     get   '/' => 'staff#index'
+    get   '/edit' => 'staff#edit'
     patch '/' => 'staff#update'
   end
 
@@ -49,6 +50,11 @@ Rails.application.routes.draw do
 
   authenticate :user, lambda { |u| u.admin? } do
     mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
+  end
+
+  scope :v1 do
+    resources :tokens, only: [:create, :delete]
+    resources :staff, only: [:index, :update]
   end
 
   root to: 'pages#login'

@@ -37,6 +37,14 @@ class Course < ActiveRecord::Base
     organization
   end
 
+  # TODO: these are n+1s waiting to happen
+  def full_title
+    "#{campus.name} #{title_without_campus}"
+  end
+  def title_without_campus
+    "#{topic.title} - #{start_on.strftime '%b %y'}"
+  end
+
   def ensure_users_are_members users
     users.each do |user|
       memberships.where(user: user).first_or_create! do |m|

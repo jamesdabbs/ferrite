@@ -1,4 +1,11 @@
 json.staff @staff do |e|
-  json.(e, :first_name, :last_name, :campus, :current_course, :title, :slack_username, :phone_number, :skype_username)
+  json.(e, :first_name, :last_name, :title, :slack_username, :phone_number, :skype_username)
+  json.campus e.campus.try(:name)
+  json.current_course do
+    if course = e.current_course
+      json.topic    course.topic.title
+      json.start_on course.start_on
+    end
+  end
   json.avatar_url e.slack_avatar(24)
 end
