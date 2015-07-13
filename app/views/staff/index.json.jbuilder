@@ -1,5 +1,5 @@
 json.staff @staff do |e|
-  json.(e, :first_name, :last_name, :title, :slack_username, :phone_number, :skype_username)
+  json.(e, :id, :email, :first_name, :last_name, :title, :slack_username, :phone_number, :skype_username)
   json.campus e.campus.try(:name)
   json.current_course do
     if course = e.current_course
