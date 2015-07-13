@@ -84,6 +84,9 @@ class Employment < ActiveRecord::Base
   def slack_avatar size
     slack_data["profile"].fetch("image_#{size}")
   end
+  def avatars
+    slack_data["profile"].select { |k,_| k.start_with? "image_" }
+  end
 
   def active?
     !slack_data["deleted"]

@@ -7,5 +7,8 @@ json.staff @staff do |e|
       json.start_on course.start_on
     end
   end
-  json.avatar_url e.slack_avatar(24)
+
+  e.avatars.each do |k,v|
+    json.set! k,v
+  end
 end
